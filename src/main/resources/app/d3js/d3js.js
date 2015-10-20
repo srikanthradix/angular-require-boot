@@ -231,8 +231,8 @@ define([
         var myDirective = {
 
             scope: {
-                chartData: '=chartData',
-                matrixData: '=matrixData'
+                chartData: '=',
+                matrixData: '='
             },
 
             restrict: 'EA',
@@ -244,7 +244,8 @@ define([
                 var d3 = d3Service.d3();
                 var chart = d3.select(elem[0]);
 
-                chart.append("div")
+                chart
+                	.append("div")
                     .attr("class", "chart")
 
                     //returns an array of all <div>...</div> elements in div

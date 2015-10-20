@@ -28,17 +28,34 @@ define([
 
     }])
     
+//    .directive("phone", function () {
+//	  return {
+//	    scope: {
+//	      dial: "&"
+//	    },
+//	    template: '<input type="button" value="Call home!" ng-click="dial()">',
+//	  };
+//	})
+    
     .directive("phone", function () {
         return {
             scope: {
                 dial: "&"
             },
             template: '<input type="text" ng-model="value">' +
-            '<div class="button" ng-click="dial({sendmsg:value})">' +
-                'Call home!' +
-            '</div>'
+            '<input type="button" value="Call home!" ng-click="dial({sendmsg:value})">'
         };
     })
+    
+//    .directive("drink", function () {
+//	  return {
+//	    scope: {},
+//	    template: '<div>{{ flavor }}</div>',
+//	    link: function (scope, element, attrs) {
+//	      scope.flavor = attrs.flavor;
+//	    }
+//	  };
+//	})
 
     .directive("drink", function () {
         return {

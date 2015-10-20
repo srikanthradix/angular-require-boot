@@ -78,7 +78,7 @@ define([
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl) {
                 ctrl.$asyncValidators.empAvail = function(modelValue, viewValue) {
-                    if(ctrl.$isEmpty(modelValue)) {
+                    if(ctrl.$isEmpty(viewValue)) {
                         return true;
                     } else {
                     	//GET http://localhost:8080/emp?id=v
@@ -99,18 +99,4 @@ define([
         };
     }])
 
-    //custom validator for email
-//    .directive('emailValidator', function() {
-//        var REGEX_EMAIL = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-//        return {
-//            require: 'ngModel',
-//            link: function(scope, elm, attrs, ctrl) {
-//                if(ctrl && ctrl.$validators.email) {
-//                    ctrl.$validators.email = function(modelValue) {
-//                        return ctrl.$isEmpty(modelValue) || REGEX_EMAIL.test(ctrl.modelValue);
-//                    };
-//                }
-//            }
-//        };
-//    })
 })

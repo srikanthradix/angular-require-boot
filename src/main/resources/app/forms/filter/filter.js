@@ -3,10 +3,9 @@
 define([
     'angular',
     'angularResource',
-    'components/version/version',
     'functions/utils'
 ], function(angular) {
-	angular.module('myApp.view2c.filter', ['ui.router', 'ngResource', 'myApp.version', 'myApp.functions'])
+	angular.module('myApp.view2c.filter', ['ui.router', 'ngResource', 'myApp.functions'])
 	
 	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 		$stateProvider

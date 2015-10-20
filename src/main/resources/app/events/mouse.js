@@ -4,7 +4,7 @@ define([
     'angular',
     'components/version/version'
 ], function(angular) {
-	angular.module('myApp.view1.mouse', ['ui.router'])
+	angular.module('myApp.view1.mouse', ['ui.router', 'myApp.version'])
 	
 	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 		$stateProvider
