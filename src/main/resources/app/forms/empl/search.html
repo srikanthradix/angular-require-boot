@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+
+	<div ng-controller="SearchEmplController">
+		<form>
+			<input type="search" ng-model="emp.dept" ng-blur="search(emp.dept)" class="form-input"
+				required="" autofocus placeholder="Search Department...">
+			<button type="button" ng-click="download()"
+				class="btn btn-info float-right">
+				Download <span class="glyphicon glyphicon-download-alt"></span>
+			</button>
+		</form>
+		<br /> <br />
+		<table id="searchResults" class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<td><input type="checkbox" ng-model="selectedAll"
+						ng-click="selectAll()">
+					</th>
+					<td>Id
+					</th>
+					<td><a href="#/view2b" ng-click="sortType = 'emp.name'">
+							Name <span ng-show="sortType === 'emp.name'"
+							class="fa fa-caret-down"></span>
+					</a>
+					</th>
+					<td><a href="#/view2b" ng-click="sortType = 'emp.salary'">
+							Salary <span ng-show="sortType === 'emp.salary'"
+							class="fa fa-caret-down"></span>
+					</a>
+					</th>
+					</th>
+					<td>Department
+					</th>
+					</th>
+					<td>Company
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat=" emp in emps | orderBy : sortType">
+					<td><input type="checkbox" ng-model="emp.selected"></td>
+					<td>{{emp.id}}</td>
+					<td>{{emp.name}}</td>
+					<td>{{emp.salary}}</td>
+					<td>{{emp.department.name}}</td>
+					<td>{{emp.department.company.name}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br />
+</body>
+</html>

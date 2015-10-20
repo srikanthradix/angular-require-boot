@@ -1,0 +1,134 @@
+/* app css stylesheet */
+
+/*.menu:before {*/
+  /*content: "[";*/
+/*}*/
+
+/*.menu:after {*/
+  /*content: "]";*/
+/*}*/
+.float-right {
+	float: right;
+}
+.menu {
+    padding: 0;
+    list-style: none;
+    background: #f2f2f2;
+}
+.menu > li{
+    display: inline-block;
+    position: relative;
+    line-height: 21px;
+    text-align: left;
+    border: 2px solid #ddd;
+    border-left: hidden;
+    border-radius: 5px 5px 5px 0px;
+    -moz-border-radius: 5px 5px 5px 0px;
+    -webkit-border-radius: 5px 5px 5px 0px;
+}
+.menu > li > a{
+    display: block;
+    padding: 8px 25px;
+    color: #333;
+    text-decoration: none;
+}
+.menu > li > a:hover{
+    color: black;
+    background: #939393;
+}
+.menu > li ul.dropdown{
+    min-width: 125px;  /* Set width of the dropdown */
+    background: #f2f2f2;
+    display: none;
+    position: absolute;
+    z-index: 999;
+    left: 0;
+}
+.menu > li:hover > ul.dropdown{
+    display: block;	/* Display the dropdown */
+}
+.menu > li > ul.dropdown > li{
+    display: block;
+}
+
+/*.menu > li:before {*/
+  /*content: "|";*/
+  /*padding-right: 0.3em;*/
+/*}*/
+
+/*.menu > li:nth-child(1):before {*/
+  /*content: "";*/
+  /*padding: 2px;*/
+/*}*/
+
+table, th, td {
+    border: 1px solid black;
+    padding: 2px;
+}
+
+td {
+    padding: 10px;
+}
+
+.chart {
+    background: #eee;
+    padding: 3px;
+}
+
+.chart div {
+    width: 0;
+    transition: all 1s ease-out;
+    -moz-transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+}
+
+.chart div {
+    /*font: 10px sans-serif;*/
+    background-color: steelblue;
+    text-align: right;
+    /*padding: 3px;*/
+    margin: 5px;
+    /*color: white;*/
+    box-shadow: 2px 2px 2px #666;
+}
+
+.edit-in-place span {
+    cursor: pointer;
+}
+
+.edit-in-place input {
+    display: none;
+}
+
+.edit-in-place.active span {
+    display: none;
+}
+
+.edit-in-place.active input {
+    display: inline-block;
+}
+
+.progress-bar.active, .progress.active .progress-bar {
+    animation: 10s linear 0s normal none infinite running progress-bar-stripes;
+}
+.progress-bar-striped, .progress-striped .progress-bar {
+    background-image: repeating-linear-gradient(45deg,
+    black, black 10px,
+    purple 15px, purple 20px);
+    background-size: 20px;
+}
+
+.css-form input.ng-invalid.ng-touched {
+	background-color: #FA787E;
+}
+.css-form input.ng-valid.ng-touched {
+	background-color: green;
+}
+
+.form-input {
+	width: 90%;
+	display: inline-block;
+	padding: 12px 16px;
+	height: 46px;
+	border: 1px solid #dfd7ca;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div ng-controller="CarouselDemoCtrl">
+        <div style="height: 350px">
+            <carousel interval="myInterval" no-wrap="noWrapSlides">
+                <slide ng-repeat="slide in slides" active="slide.active"  index="$index">
+                    <img ng-src="{{slide.image}}" style="margin:auto;">
+                    <div class="carousel-caption">
+                        <h4>Slide {{$index}}</h4>
+                    </div>
+                </slide>
+            </carousel>
+        </div>
+
+        <button type="button" class="btn btn-default" ng-click="addSlide()">Add Slide</button>
+        <br/>
+        <label>
+            <input type="checkbox" ng-model="noWrapSlides">
+            Disable Looping
+        </label>
+        <br/>
+        <label>
+            Enter the interval: <input type="number" ng-model="myInterval">
+        </label>
+    </div>
+
+    <br/>
+    <div>
+        <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Toggle Collapse</button>
+        <br/>
+        <div collapse="isCollapsed">Some content here...</div>
+    </div>
+
+<br/>
+
+    <div ng-controller="DateDemoCtrl">
+        <pre>Selected Date: {{dt | date:'fullDate'}}</pre>
+        <h4>Inline</h4>
+        <div style="display: inline-block; min-height: 350px">
+            <datepicker ng-model="dt" show-weeks="true" min-date="minDt"></datepicker>
+        </div>
+        <br/>
+        <h4>Popup</h4>
+        <div>
+            <input type="text" datepicker-popup ng-model="dt" is-open="status.opened" close-text="Close"
+                   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"/>
+            <button type="button" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+        </div>
+    </div>
+</body>
+</html>

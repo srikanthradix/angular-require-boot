@@ -1,0 +1,42 @@
+<p>This is the partial for view 2.</p>
+<p>
+   {{ 'App Version is %VERSION%' | interpolated | capitalize }}
+</p>
+
+<br/>
+<div ng-controller="FriendsController">
+    {{ greeting }} <br/>
+    <label>Two times the value of <input ng-model="num"> is {{ doubleVal(num) }}</label> <br/>
+
+    <br/>
+    <label>Search: <input ng-model="searchText"><br/> </label>
+    <br/>
+    <table id="searchTextResults" class="table table-bordered table-striped">
+        <tr><th>Name</th><th>Phone</th></tr>
+        <tr ng-repeat="friend in friends | filter:searchText:strict">
+            <td>{{friend.name}}</td>
+            <td>{{friend.phone}}</td>
+        </tr>
+    </table>
+
+    <br/>
+    <label>Any: <input ng-model="search.$"/></label><br/>
+    <label>Name: <input ng-model="search.name"></label><br/>
+    <label>Phone: <input ng-model="search.phone"></label><br/>
+    <label>Equality:<input type="checkbox" ng-model="strict"></label><br/>
+    <br/>
+    <table id="searchVariousCriteria" class="table table-bordered table-striped">
+        <tr><th>Name</th><th>Phone</th></tr>
+        <tr ng-repeat="friend in friends | filter:search:strict">
+            <td>{{friend.name}}</td>
+            <td>{{friend.phone}}</td>
+        </tr>
+    </table>
+
+    <br/>
+
+</div>
+
+<div ng-controller="WeatherController">
+    <label> Current weather is: {{ weather }}</label>
+</div>

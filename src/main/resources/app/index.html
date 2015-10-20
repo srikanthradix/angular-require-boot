@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<link rel="stylesheet"
+	href="bower_components/html5-boilerplate/dist/css/normalize.css">
+<link rel="stylesheet"
+	href="bower_components/html5-boilerplate/dist/css/main.css">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/form.css">
+
+<script
+	src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+
+<!--  font awesome -->
+<link rel="stylesheet"
+	href="bower_components/font-awesome/css/font-awesome.min.css">
+<!-- bootstrap -->
+<link rel="stylesheet"
+	href="bower_components/bootswatch/sandstone/bootstrap.min.css">
+
+<title>My AngularJS App</title>
+</head>
+<body ng-cloak>
+
+   <div ng-controller="TabController">
+		<ul class="menu">
+			<li ng-repeat="tab in tabs">
+				<a ui-sref-active="active"	ui-sref="{{tab.link}}">{{tab.label}}</a>
+				<ul ng-show="tab.subtabs && tab.subtabs.length > 0" class="menu dropdown">
+					<li ng-repeat="subtab in tab.subtabs">
+						<a ui-sref-active="active" ui-sref="{{subtab.link}}">{{subtab.label}}</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div ui-view />
+	<div>
+		Angular seed app: v<span app-version></span>
+	</div>
+	<script data-main="require-config" src="bower_components/requirejs/require.js"></script>
+</body>
+</html>
