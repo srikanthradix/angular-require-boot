@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-    <div ng-controller="CarouselDemoCtrl">
+    <div>
         <div style="height: 350px">
             <carousel interval="myInterval" no-wrap="noWrapSlides">
                 <slide ng-repeat="slide in slides" active="slide.active"  index="$index">
@@ -38,7 +38,7 @@
 
 <br/>
 
-    <div ng-controller="DateDemoCtrl">
+    <div>
         <pre>Selected Date: {{dt | date:'fullDate'}}</pre>
         <h4>Inline</h4>
         <div style="display: inline-block; min-height: 350px">
