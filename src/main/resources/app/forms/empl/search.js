@@ -73,6 +73,7 @@ define([
         	});       	
         }
         
+        $scope.itemsPerPage = 5;
         $scope.predicate = 'salary';
         $scope.reverse = true;
         $scope.order = function(predicate) {

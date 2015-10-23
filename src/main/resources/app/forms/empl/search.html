@@ -16,6 +16,7 @@
 			</button>
 		</form>
 		<br /> <br />
+		<pre> Displaying Number of Entries: <input type="number" ng-model="itemsPerPage"> </pre>
 		<table id="searchResults" class="table table-bordered table-striped">
 			<thead>
 				<tr>
@@ -34,7 +35,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr dir-paginate="emp in emps | orderBy : predicate : reverse | itemsPerPage: 5">
+				<tr dir-paginate="emp in emps | orderBy : predicate : reverse | itemsPerPage: itemsPerPage">
 					<td><input type="checkbox" ng-model="emp.selected"></td>
 					<td>{{emp.id}}</td>
 					<td>{{emp.name}}</td>
@@ -45,6 +46,7 @@
 		</table>
 		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)"
 			template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+			
 	</div>
 	<br />
 </body>
