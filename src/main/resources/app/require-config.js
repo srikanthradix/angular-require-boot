@@ -9,6 +9,7 @@ require.config({
 		angularAnimate: 'bower_components/angular-animate/angular-animate',
 		angularUIBootstrap: 'bower_components/angular-bootstrap/ui-bootstrap-tpls',
 		angularUIRouter: 'bower_components/angular-ui-router/release/angular-ui-router',
+		angularUtils: 'bower_components/angularUtils-pagination/dirPagination',
 		d3: 'bower_components/d3/d3',
 		sockjs: 'bower_components/sockjs/sockjs',
 	  	stomp: 'bower_components/stomp-websocket/lib/stomp',
@@ -32,6 +33,9 @@ require.config({
 		},
 		'angularUIRouter': {
 			deps: ['angular', 'angularUIBootstrap']
+		},
+		'angularUtils': {
+			deps: ['angular']
 		}
 	},
 	priority: ["angular"]
@@ -40,6 +44,7 @@ require.config({
 
 require([
 	'angular',
+	'angularUIBootstrap',
     'angularUIRouter',
 	'app',
 	], function(angular, app) {

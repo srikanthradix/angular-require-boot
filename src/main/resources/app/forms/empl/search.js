@@ -4,19 +4,19 @@
 'use strict';
 
 define([
-    'angular',
+    'angular', 'angularUtils'
 ], function(angular) {
-	angular.module('myApp.view2b.search', ['ui.router'])
+	angular.module('myApp.view2b.search', ['ui.router', 'angularUtils.directives.dirPagination'])
 
 	
-	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-		$stateProvider
-    	.state('view2b', {
-    		url: '/view2b',
-    		 templateUrl: 'forms/empl/search.html',
-	        controller: 'SearchEmplController'
-        })
-	}])
+//	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+//		$stateProvider
+//    	.state('view2b', {
+//    		url: '/view2b',
+//    		 templateUrl: 'forms/empl/search.html',
+//	        controller: 'SearchEmplController'
+//        })
+//	}])
 	
 //    .config(['$routeProvider', function($routeProvider) {
 //        $routeProvider.when('/view2b', {
@@ -35,7 +35,6 @@ define([
 	        		.$promise.then(function(employees) {
 		        		if(employees) {
 		        			angular.forEach(employees, function(employee) {
-		        				console.log(employee);
 		        				$scope.emps.push(employee);
 	        				});
 		        		}
@@ -50,7 +49,6 @@ define([
         		row = row + emp.name + ",";
         		row = row + emp.salary  + ",";
         		row = row + emp.department.name  + ",";
-        		row = row + emp.department.company.name;
         		data.push(row);
         	});
         	var anchor = angular.element('<a/>');
@@ -73,6 +71,13 @@ define([
         	angular.forEach($scope.emps, function(emp) {
     			emp.selected = $scope.selectedAll;
         	});       	
+        }
+        
+        $scope.predicate = 'salary';
+        $scope.reverse = true;
+        $scope.order = function(predicate) {
+    		$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+	        $scope.predicate = predicate;
         }
 
         $scope.reset = function() {

@@ -6,14 +6,14 @@ define([
 	angular.module('myApp.view5.sockio', ['ui.router'])
 	
 	
-	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-		$stateProvider
-    	.state('view5', {
-    		url: '/view5',
-    		 templateUrl: 'sockio/sockclient.html',
-	        controller: 'sockIOController'
-        })
-	}])	
+//	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+//		$stateProvider
+//    	.state('view5', {
+//    		url: '/view5',
+//    		 templateUrl: 'sockio/sockclient.html',
+//	        controller: 'sockIOController'
+//        })
+//	}])	
 	
 //	.config(['$routeProvider', function($routeProvider) {
 //	   $routeProvider.when('/view5', {

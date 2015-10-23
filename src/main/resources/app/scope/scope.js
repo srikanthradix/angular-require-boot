@@ -3,14 +3,14 @@ define([
 ], function(angular) {
 	angular.module('myApp.view6.scope', ['ui.router'])
 	
-	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-		$stateProvider
-    	.state('view6', {
-    		url: '/view6',
-    		 templateUrl: 'scope/scope.html',
-	        controller: 'scopeController'
-        })
-	}])	
+//	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+//		$stateProvider
+//    	.state('view6', {
+//    		url: '/view6',
+//    		 templateUrl: 'scope/scope.html',
+//	        controller: 'scopeController'
+//        })
+//	}])	
 	
 //    .config(['$routeProvider', function($routeProvider) {
 //    	$routeProvider.when('/view6', {

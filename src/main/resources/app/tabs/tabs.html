@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tabs</title>
+</head>
+<body ng-controller="TabController">
+	
+	<!-- <tabset>
+        <tab
+            ng-repeat="t in tabs"
+            heading="{{t.title}}"
+            select="go(t.route)"
+            active="t.active">
+        </tab>
+    </tabset> -->
+    
+	<ul class="menu">
+		<li ng-repeat="tab in tabs">
+			<a ng-click="go(tab.route)">{{tab.title}}</a>
+			<ul ng-show="tab.dropdown && tab.dropdown.length > 0" class="menu dropdown">
+				<li ng-repeat="dropdown in tab.dropdown">
+					<a ng-click="go(dropdown.route)">{{dropdown.title}}</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+ 
+    <div ui-view></div>
+</body>
+</html>

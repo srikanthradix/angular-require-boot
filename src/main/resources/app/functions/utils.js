@@ -158,7 +158,7 @@ define([
 
                 return $q(function (resolve, reject) {
                     if (!friends) {
-                        $timeout(function () {
+//                        $timeout(function () {
                             $http.get(url)
                                 .then(function (response) {
                                     if (typeof response.data === 'object') {
@@ -170,7 +170,7 @@ define([
                                 }, function(response) {
                                     reject(response.data);
                                 });
-                        }, 500)
+//                        }, 500)
                     } else {
                         resolve(friends);
                     }

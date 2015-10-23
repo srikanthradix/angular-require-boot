@@ -132,3 +132,10 @@ td {
 	height: 46px;
 	border: 1px solid #dfd7ca;
 }
+
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+}

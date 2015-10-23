@@ -8,7 +8,7 @@
 
 	<div ng-controller="SearchEmplController">
 		<form>
-			<input type="search" ng-model="emp.dept" ng-blur="search(emp.dept)" class="form-input"
+			<input type="search" ng-model="emp.dept" ng-change="search(emp.dept)" class="form-input"
 				required="" autofocus placeholder="Search Department...">
 			<button type="button" ng-click="download()"
 				class="btn btn-info float-right">
@@ -19,40 +19,32 @@
 		<table id="searchResults" class="table table-bordered table-striped">
 			<thead>
 				<tr>
-					<td><input type="checkbox" ng-model="selectedAll"
-						ng-click="selectAll()">
+					<td><input type="checkbox" ng-model="selectedAll" ng-click="selectAll()">
 					</th>
 					<td>Id
 					</th>
-					<td><a href="#/view2b" ng-click="sortType = 'emp.name'">
-							Name <span ng-show="sortType === 'emp.name'"
-							class="fa fa-caret-down"></span>
-					</a>
+					<td>Name
 					</th>
-					<td><a href="#/view2b" ng-click="sortType = 'emp.salary'">
-							Salary <span ng-show="sortType === 'emp.salary'"
-							class="fa fa-caret-down"></span>
-					</a>
+					<td><a href="" ng-click="order('salary')">Salary</a>
+					<span class="sortorder" ng-show="predicate === 'salary'" ng-class="{reverse:reverse}"></span>
 					</th>
 					</th>
 					<td>Department
 					</th>
-					</th>
-					<td>Company
-					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat=" emp in emps | orderBy : sortType">
+				<tr dir-paginate="emp in emps | orderBy : predicate : reverse | itemsPerPage: 5">
 					<td><input type="checkbox" ng-model="emp.selected"></td>
 					<td>{{emp.id}}</td>
 					<td>{{emp.name}}</td>
 					<td>{{emp.salary}}</td>
 					<td>{{emp.department.name}}</td>
-					<td>{{emp.department.company.name}}</td>
 				</tr>
 			</tbody>
 		</table>
+		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)"
+			template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
 	</div>
 	<br />
 </body>

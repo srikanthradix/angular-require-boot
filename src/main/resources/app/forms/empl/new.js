@@ -12,21 +12,21 @@ define([
 
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     	$stateProvider
-    	.state('view2a', {
-    		url: '/view2a',
-            templateUrl: 'forms/empl/new.html',
-            controller: 'NewEmplController'
-        })
-    	.state('view2a.id', {
+//    	.state('view2a', {
+//    		url: '/view2a',
+//            templateUrl: 'forms/empl/new.html',
+//            controller: 'NewEmplController'
+//        })
+    	.state('main.view2a.id', {
     		url: '/view2a/id',
             templateUrl: 'forms/empl/id.html',
         })
-        .state('view2a.profile', {
+        .state('main.view2a.profile', {
     		url: '/view2a/profile',
             templateUrl: 'forms/empl/profile.html',
         });
     	
-    	$urlRouterProvider.otherwise('/view2a');
+    	$urlRouterProvider.otherwise('/main/view2a');
     }])
 
     .controller('NewEmplController', ['$scope', '$state', 'empService', function($scope, $state, empService) {
@@ -48,7 +48,7 @@ define([
         	})
         	.finally(function() {
         		$scope.reset();
-        		$state.go('view2a');
+        		$state.go('main.view2a');
         	});
         };
         

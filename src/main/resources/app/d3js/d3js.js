@@ -7,14 +7,14 @@ define([
 ], function(angular) {
 	angular.module('myApp.view4.d3js', ['ui.router'])
 	
-	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-		$stateProvider
-    	.state('view4', {
-    		url: '/view4',
-    		 templateUrl:  'd3js/d3js.html',
-	        controller: 'd3Controller'
-        })
-	}])
+//	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+//		$stateProvider
+//    	.state('view4', {
+//    		url: '/view4',
+//    		 templateUrl:  'd3js/d3js.html',
+//	        controller: 'd3Controller'
+//        })
+//	}])
 	
 //    .config(['$routeProvider', function($routeProvider) {
 //        $routeProvider.when('/view4', {

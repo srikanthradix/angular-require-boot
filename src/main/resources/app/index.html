@@ -22,20 +22,7 @@
 
 <title>My AngularJS App</title>
 </head>
-<body ng-cloak>
-
-   <div ng-controller="TabController">
-		<ul class="menu">
-			<li ng-repeat="tab in tabs">
-				<a ui-sref-active="active"	ui-sref="{{tab.link}}">{{tab.label}}</a>
-				<ul ng-show="tab.subtabs && tab.subtabs.length > 0" class="menu dropdown">
-					<li ng-repeat="subtab in tab.subtabs">
-						<a ui-sref-active="active" ui-sref="{{subtab.link}}">{{subtab.label}}</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
+<body>
 
 	<div ui-view />
 	

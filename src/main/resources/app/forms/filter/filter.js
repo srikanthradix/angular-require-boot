@@ -7,14 +7,14 @@ define([
 ], function(angular) {
 	angular.module('myApp.view2c.filter', ['ui.router', 'ngResource', 'myApp.functions'])
 	
-	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-		$stateProvider
-    	.state('view2c', {
-    		url: '/view2c',
-    		 templateUrl: 'forms/filter/filter.html',
-	        controller: 'FriendsController'
-        })
-	}])	
+//	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+//		$stateProvider
+//    	.state('view2c', {
+//    		url: '/view2c',
+//    		 templateUrl: 'forms/filter/filter.html',
+//	        controller: 'FriendsController'
+//        })
+//	}])	
 	
 //	.config(['$routeProvider', function($routeProvider) {
 //		  $routeProvider.when('/view2c', {

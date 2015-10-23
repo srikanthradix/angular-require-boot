@@ -6,14 +6,14 @@ define([
 ], function(angular) {
 	angular.module('myApp.view1.mouse', ['ui.router', 'myApp.version'])
 	
-	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-		$stateProvider
-    	.state('view1', {
-    		url: '/view1',
-    		 templateUrl: 'events/mouse.html',
-	        controller: 'View1Ctrl'
-        })
-	}])
+//	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+//		$stateProvider
+//    	.state('view1', {
+//    		url: '/view1',
+//    		 templateUrl: 'events/mouse.html',
+//	        controller: 'View1Ctrl'
+//        })
+//	}])
 	
 //    .config(['$routeProvider', function($routeProvider) {
 //      $routeProvider.when('/view1', {
