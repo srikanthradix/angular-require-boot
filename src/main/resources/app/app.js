@@ -119,6 +119,7 @@
                     .state('main.view8', {
                         url: '/view8',
                         templateUrl: 'filters/filters.html',
+                        controllerAs: 'friendsC',
                         controller: 'FriendsController'
                     })
                 $urlRouterProvider.otherwise('/main/view7');

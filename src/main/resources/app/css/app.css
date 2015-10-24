@@ -13,15 +13,21 @@
 .menu {
     padding: 0;
     list-style: none;
-    background: #f2f2f2;
+    background: lightsteelblue;
+}
+
+menu > ul {
+    margin-bottom: 0;
 }
 .menu > li{
     display: inline-block;
+
     position: relative;
-    line-height: 21px;
+    line-height: 40px;
     text-align: left;
-    border: 2px solid #ddd;
-    border-left: hidden;
+
+    border: 1px solid #ddd;
+    border-left: none;
     border-radius: 5px 5px 5px 0px;
     -moz-border-radius: 5px 5px 5px 0px;
     -webkit-border-radius: 5px 5px 5px 0px;
@@ -33,19 +39,22 @@
     text-decoration: none;
 }
 .menu > li > a:hover{
-    color: black;
-    background: #939393;
+    cursor: pointer;
+    background: lightsteelblue;
+    text-decoration: underline;
 }
 .menu > li ul.dropdown{
-    min-width: 125px;  /* Set width of the dropdown */
-    background: #f2f2f2;
+    /*Set width of the dropdown*/
+    min-width: 125px;
+    background: lightsteelblue;
     display: none;
     position: absolute;
     z-index: 999;
     left: 0;
 }
 .menu > li:hover > ul.dropdown{
-    display: block;	/* Display the dropdown */
+    /* Display the dropdown */
+    display: block;
 }
 .menu > li > ul.dropdown > li{
     display: block;
@@ -93,15 +102,12 @@ td {
 .edit-in-place span {
     cursor: pointer;
 }
-
-.edit-in-place input {
-    display: none;
-}
-
 .edit-in-place.active span {
     display: none;
 }
-
+.edit-in-place input {
+    display: none;
+}
 .edit-in-place.active input {
     display: inline-block;
 }

@@ -3,25 +3,19 @@
 
     define([
         'angular',
-//    'angularRoute',
-        'angularAnimate'
+        'angularResource'
     ], function (angular) {
-        angular.module('myApp.view2a.newEmplForm', ['ngAnimate', 'ui.router'])
+        angular.module('myApp.view2a.newEmplForm', ['ngResource', 'ui.router'])
 
             .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
                 $stateProvider
-//    	.state('view2a', {
-//    		url: '/view2a',
-//            templateUrl: 'forms/empl/new.html',
-//            controller: 'NewEmplController'
-//        })
                     .state('main.view2a.id', {
-                        url: '/view2a/idForm',
-                        templateUrl: 'forms/empl/idForm.html',
+                        url: '/idForm',
+                        templateUrl: 'forms/empl/idForm.html'
                     })
                     .state('main.view2a.profile', {
-                        url: '/view2a/profileForm',
-                        templateUrl: 'forms/empl/profileForm.html',
+                        url: '/profileForm',
+                        templateUrl: 'forms/empl/profileForm.html'
                     });
 
                 $urlRouterProvider.otherwise('/main/view2a');

@@ -1,52 +1,37 @@
-(function() {
-'use strict';
-define([
-    'angular',
-    'angularResource',
-    'functions/utils'
-], function(angular) {
-	angular.module('myApp.view8.filters', ['ui.router', 'ngResource', 'myApp.functions'])
-	
-//	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-//		$stateProvider
-//    	.state('view2c', {
-//    		url: '/view2c',
-//    		 templateUrl: 'forms/filter/filter.html',
-//	        controller: 'FriendsController'
-//        })
-//	}])	
-	
-//	.config(['$routeProvider', function($routeProvider) {
-//		  $routeProvider.when('/view2c', {
-//			templateUrl: 'forms/filter/filter.html',
-//			controller: 'FriendsController'
-//		  });
-//	}])
-	
-	.controller('FriendsController', ['$scope', 'friendsFactory', function($scope, friendsFactory) {
-	//$scope.greeting = 'Hola!';
-	
-		friendsFactory.getFriends()
-		    .then(function(data) {
-		        $scope.friends = data;
-		        return data;
-		    }, function(error) {
-		        $scope.friends = 'Unable to retrieve friends\' data';
-		    })
-		    .finally(function() {
-		        console.log('Finished at:', new Date());
-	        });
-	}])
-		
-	.controller('WeatherController', ['$scope', 'weatherService', function($scope, weatherService) {
-		var weatherReport =  function() {
-		    weatherService.getWeather()
-		        .then(function(data) {
-		            $scope.weather = data;
-		        }, function(error) {
-		            $scope.weather = 'Unable to get weather report';
-	            });
-	    }();
-	}])
-})
+(function () {
+    'use strict';
+    define([
+        'angular',
+        'functions/utils',
+        'components/version/version'
+    ], function (angular) {
+        angular.module('myApp.view8.filters', ['myApp.functions', 'myApp.version'])
+
+            .controller('FriendsController', ['friendsFactory', function (friendsFactory) {
+                var self = this;
+                self.greeting = 'Hola!';
+
+                friendsFactory.getFriends()
+                    .then(function (data) {
+                        self.friends = data;
+                    }, function (error) {
+                        self.friends = 'Unable to retrieve friends\' data';
+                    })
+                    .finally(function () {
+                        console.log('Finished at:', new Date());
+                    });
+            }])
+
+            .controller('WeatherController', ['weatherService', function (weatherService) {
+                var self = this;
+                self.weatherReport = function () {
+                    weatherService.getWeather()
+                        .then(function (data) {
+                            self.weather = data;
+                        }, function (error) {
+                            self.weather = 'Unable to get weather report';
+                        });
+                }();
+            }])
+    })
 })();

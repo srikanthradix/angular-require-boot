@@ -5,29 +5,29 @@
 
 <br/>
 <div>
-    {{ greeting }} <br/>
-    <label>Two times the value of <input ng-model="num"> is {{ doubleVal(num) }}</label> <br/>
+    {{ friendsC.greeting }} <br/>
+    <label>Two times the value of <input ng-model="friendsC.num"> is {{ doubleVal(num) }}</label> <br/>
 
     <br/>
-    <label>Search: <input ng-model="searchText"><br/> </label>
+    <label>Search: <input ng-model="friendsC.searchText"><br/> </label>
     <br/>
     <table id="searchTextResults" class="table table-bordered table-striped">
         <tr><th>Name</th><th>Phone</th></tr>
-        <tr ng-repeat="friend in friends | filter:searchText:strict">
+        <tr ng-repeat="friend in friendsC.friends | filter:friendsC.searchText:friendsC.strict">
             <td>{{friend.name}}</td>
             <td>{{friend.phone}}</td>
         </tr>
     </table>
 
     <br/>
-    <label>Any: <input ng-model="search.$"/></label><br/>
-    <label>Name: <input ng-model="search.name"></label><br/>
-    <label>Phone: <input ng-model="search.phone"></label><br/>
-    <label>Equality:<input type="checkbox" ng-model="strict"></label><br/>
+    <label>Any: <input ng-model="friendsC.search.$"/></label><br/>
+    <label>Name: <input ng-model="friendsC.search.name"></label><br/>
+    <label>Phone: <input ng-model="friendsC.search.phone"></label><br/>
+    <label>Equality:<input type="checkbox" ng-model="friendsC.strict"></label><br/>
     <br/>
     <table id="searchVariousCriteria" class="table table-bordered table-striped">
         <tr><th>Name</th><th>Phone</th></tr>
-        <tr ng-repeat="friend in friends | filter:search:strict">
+        <tr ng-repeat="friend in friendsC.friends | filter:friendsC.search:friendsC.strict">
             <td>{{friend.name}}</td>
             <td>{{friend.phone}}</td>
         </tr>
@@ -37,6 +37,6 @@
 
 </div>
 
-<div ng-controller="WeatherController">
-    <label> Current weather is: {{ weather }}</label>
+<div ng-controller="WeatherController as weatherC">
+    <label> Current weather is: {{ weatherC.weather }}</label>
 </div>

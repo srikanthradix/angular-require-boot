@@ -39,8 +39,16 @@
         <tr dir-paginate="emp in srchC.emps | orderBy : srchC.predicate : srchC.reverse | itemsPerPage: srchC.itemsPerPage">
             <td><input type="checkbox" ng-model="emp.selected"></td>
             <td>{{emp.id}}</td>
-            <td>{{emp.name}}</td>
-            <td>{{emp.salary}}</td>
+            <td>
+                <edit-in-place value="emp.name">
+                    {{emp.name}}
+                </edit-in-place>
+            </td>
+            <td>
+                <edit-in-place value="emp.salary">
+                    {{emp.salary}}
+                </edit-in-place>
+            </td>
             <td>{{emp.department.name}}</td>
         </tr>
         </tbody>

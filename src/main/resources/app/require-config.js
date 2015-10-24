@@ -4,7 +4,6 @@
 require.config({
 	paths: {
 		angular: 'bower_components/angular/angular',
-//		angularRoute: 'bower_components/angular-route/angular-route',
 		angularMocks: 'bower_components/angular-mocks/angular-mocks',
 		angularResource: 'bower_components/angular-resource/angular-resource',
 		angularAnimate: 'bower_components/angular-animate/angular-animate',
@@ -13,12 +12,10 @@ require.config({
 		angularUtils: 'bower_components/angularUtils-pagination/dirPagination',
 		d3: 'bower_components/d3/d3',
 		sockjs: 'bower_components/sockjs/sockjs',
-	  	stomp: 'bower_components/stomp-websocket/lib/stomp',
-		text: 'bower_components/text/text'
+	  	stomp: 'bower_components/stomp-websocket/lib/stomp'
 	},
 	shim: {
 		'angular': {'exports' : 'angular'},
-//		'angularRoute': ['angular'],
 		'angularResource': {
 			deps: ['angular']
 		},
