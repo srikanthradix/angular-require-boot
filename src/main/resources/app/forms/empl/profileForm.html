@@ -9,7 +9,7 @@
 	<div class="css-form">
 		<div class="form-group">
 			<label for="name">Employee Name</label> <input type="text"
-				ng-model="emp.name" name="name" required=""
+				ng-model="nefC.emp.name" name="name" required=""
 				ng-model-options="{updateOn : 'blur'}" />
 			<div ng-show="form.$submitted || form.name.$touched">
 				<span ng-show="form.name.$error.required">Enter employee name</span>
@@ -18,7 +18,7 @@
 
 		<div class="form-group">
 			<label for="sal">Employee Salary</label> <input type="text"
-				ng-model="emp.salary" name="sal" required=""
+				ng-model="nefC.emp.salary" name="sal" required=""
 				ng-model-options="{updateOn : 'blur'}" />
 			<div ng-show="form.$submitted || form.sal.$touched">
 				<span ng-show="form.sal.$error.required">Enter employee
@@ -28,7 +28,7 @@
 
 		<div class="form-group">
 			<label for="dept">Department</label> <input type="text"
-				ng-model="emp.dept" name="dept" required=""
+				ng-model="nefC.emp.dept" name="dept" required=""
 				ng-model-options="{updateOn : 'blur'}" />
 			<div ng-show="form.$submitted || form.dept.$touched">
 				<span ng-show="form.dept.$error.required">Enter employee
@@ -37,7 +37,7 @@
 
 			<div class="form-group">
 				<label for="mgr_id">Manager Id</label> <input type="text"
-					ng-model="emp.mgr_id" name="mgr_id" required=""
+					ng-model="nefC.emp.mgr_id" name="mgr_id" required=""
 					ng-model-options="{updateOn : 'blur'}" />
 				<div ng-show="form.$submitted || form.mgr_id.$touched">
 					<span ng-show="form.mgr_id.$error.required">Enter employee
@@ -46,7 +46,7 @@
 
 				<div class="form-group">
 					<label for="uagree">I agree</label> <input type="checkbox"
-						ng-model="emp.agree" name="uagree" required="" /> <br />
+						ng-model="nefC.emp.agree" name="uagree" required="" /> <br />
 					<div ng-show="form.$submitted || form.uagree.$touched">
 						<span ng-show="form.uagree.$error.required">Please agree to
 							continue.</span>
@@ -55,16 +55,16 @@
 
 				<br />
 				<div>
-					<a ui-sref="view2a.id" class="btn btn-info"> Back<span
+					<a ui-sref="main.view2a.id" class="btn btn-info"> Back<span
 						class="glyphicon glyphicon-circle-arrow-left"></span>
 					</a>
 				</div>
-				<button type="submit" ng-click="save(emp)"
+				<button type="submit" ng-click="nefC.save(emp)"
 					ng-disabled="form.$invalid" class="btn btn-info">
 					Submit <span class="glyphicon glyphicon-circle-arrow-down"></span>
 				</button>
 
-				<button type="button" ng-click="reset()" class="btn btn-info">
+				<button type="button" ng-click="nefC.reset()" class="btn btn-info">
 					Reset <span class="glyphicon glyphicon-circle-arrow-left"></span>
 				</button>
 

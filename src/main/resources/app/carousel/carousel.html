@@ -7,8 +7,8 @@
 <body>
     <div>
         <div style="height: 350px">
-            <carousel interval="myInterval" no-wrap="noWrapSlides">
-                <slide ng-repeat="slide in slides" active="slide.active"  index="$index">
+            <carousel interval="carouselCtrl.myInterval" no-wrap="carouselCtrl.noWrapSlides">
+                <slide ng-repeat="slide in carouselCtrl.slides" active="slide.active"  index="$index">
                     <img ng-src="{{slide.image}}" style="margin:auto;">
                     <div class="carousel-caption">
                         <h4>Slide {{$index}}</h4>
@@ -17,15 +17,15 @@
             </carousel>
         </div>
 
-        <button type="button" class="btn btn-default" ng-click="addSlide()">Add Slide</button>
+        <button type="button" class="btn btn-default" ng-click="carouselCtrl.addSlide()">Add Slide</button>
         <br/>
         <label>
-            <input type="checkbox" ng-model="noWrapSlides">
+            <input type="checkbox" ng-model="carouselCtrl.noWrapSlides">
             Disable Looping
         </label>
         <br/>
         <label>
-            Enter the interval: <input type="number" ng-model="myInterval">
+            Enter the interval: <input type="number" ng-model="carouselCtrl.myInterval">
         </label>
     </div>
 
@@ -38,18 +38,18 @@
 
 <br/>
 
-    <div>
-        <pre>Selected Date: {{dt | date:'fullDate'}}</pre>
+    <div ng-controller="DateDemoCtrl as DDC">
+        <pre>Selected Date: {{DDC.dt | date:'fullDate'}}</pre>
         <h4>Inline</h4>
         <div style="display: inline-block; min-height: 350px">
-            <datepicker ng-model="dt" show-weeks="true" min-date="minDt"></datepicker>
+            <datepicker ng-model="DDC.dt" show-weeks="true" min-date="minDt"></datepicker>
         </div>
         <br/>
         <h4>Popup</h4>
         <div>
-            <input type="text" datepicker-popup ng-model="dt" is-open="status.opened" close-text="Close"
-                   datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"/>
-            <button type="button" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            <input type="text" datepicker-popup ng-model="DDC.dt" is-open="DDC.status.opened" close-text="Close"
+                   datepicker-options="dateOptions" date-disabled="DDC.disabled(date, mode)" ng-required="true"/>
+            <button type="button" ng-click="DDC.open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
         </div>
     </div>
 </body>

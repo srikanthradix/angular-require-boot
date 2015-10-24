@@ -1,11 +1,11 @@
+(function() {
 'use strict';
-
 define([
     'angular',
     'angularResource',
     'functions/utils'
 ], function(angular) {
-	angular.module('myApp.view2c.filter', ['ui.router', 'ngResource', 'myApp.functions'])
+	angular.module('myApp.view8.filters', ['ui.router', 'ngResource', 'myApp.functions'])
 	
 //	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 //		$stateProvider
@@ -48,5 +48,5 @@ define([
 	            });
 	    }();
 	}])
-	
 })
+})();

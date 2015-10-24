@@ -12,7 +12,7 @@
 
 			<div class="form-group">
 				<label for="id">Employee Id</label> 
-				<input type="text" ng-model="emp.id" name="id" required="" emp-avail
+				<input type="text" ng-model="nefC.emp.id" name="id" required="" emp-avail
 					ng-model-options="{updateOn : 'blur'}" />
 				<div ng-show="form.$submitted || form.id.$touched">
 					<span ng-show="form.id.$error.required">Enter employee id</span>
@@ -21,7 +21,7 @@
 			</div>
 			
 			<div>
-				<a ui-sref="view2a.profile" class="btn btn-info" ng-disabled="form.$invalid" ng-click="next(emp)">
+				<a ui-sref="main.view2a.profile" class="btn btn-info" ng-disabled="form.$invalid" ng-click="nefC.next(emp)">
 				Next<span class="glyphicon glyphicon-circle-arrow-right"></span>
 				</a>
 			</div>

@@ -1,6 +1,4 @@
-/**
- * Created by Srikanth on 8/27/2015.
- */
+(function() {
 'use strict';
 
 define([
@@ -8,7 +6,7 @@ define([
 //    'angularRoute',
     'angularAnimate'
 ], function(angular) {
-	angular.module('myApp.view2a.new', ['ngAnimate', 'ui.router'])
+	angular.module('myApp.view2a.newEmplForm', ['ngAnimate', 'ui.router'])
 
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     	$stateProvider
@@ -18,50 +16,51 @@ define([
 //            controller: 'NewEmplController'
 //        })
     	.state('main.view2a.id', {
-    		url: '/view2a/id',
-            templateUrl: 'forms/empl/id.html',
+    		url: '/view2a/idForm',
+            templateUrl: 'forms/empl/idForm.html',
         })
         .state('main.view2a.profile', {
-    		url: '/view2a/profile',
-            templateUrl: 'forms/empl/profile.html',
+    		url: '/view2a/profileForm',
+            templateUrl: 'forms/empl/profileForm.html',
         });
     	
     	$urlRouterProvider.otherwise('/main/view2a');
     }])
 
-    .controller('NewEmplController', ['$scope', '$state', 'empService', function($scope, $state, empService) {
-    	$scope.master = $scope.master || {};
-    	$scope.view2a = $scope.view2a || {};
+    .controller('NewEmplController', ['$state', 'empService', function($state, empService) {
+    	var self = this;
+    	self.master = self.master || {};
+    	self.view2a = self.view2a || {};
     	
-    	$scope.next = function(emp) {
-            angular.extend($scope.master, emp);
+    	self.next = function(emp) {
+            angular.extend(self.master, emp);
         };
         
-        $scope.save = function(emp) {
-        	angular.extend(emp, $scope.master);
+        self.save = function(emp) {
+        	angular.extend(emp, self.master);
         	empService.save(emp).$promise
         	.then(function(data) {
-        		$scope.view2a.message = 'Employee signed up: '+data.id 
+        		self.view2a.message = 'Employee signed up: '+data.id 
         	}, function(error) {
         		console.log(error);
-        		$scope.view2a.message = 'There is an error signing up employee. Please contact customer support.'; 
+        		self.view2a.message = 'There is an error signing up employee. Please contact customer support.'; 
         	})
         	.finally(function() {
-        		$scope.reset();
+        		self.reset();
         		$state.go('main.view2a');
         	});
         };
         
-        $scope.search = function(id) {
-        	$scope.emps = []
+        self.search = function(id) {
+        	self.emps = []
         	empService.get({id:id})
         	.$promise.then(function(data) {
-        		$scope.emps.push(data);
+        		self.emps.push(data);
         	})
         }
 
-        $scope.reset = function() {
-            $scope.emp = $scope.master = {};
+        self.reset = function() {
+            self.emp = self.master = {};
         };
     }])
     
@@ -98,5 +97,5 @@ define([
             }
         };
     }])
-
 })
+})();

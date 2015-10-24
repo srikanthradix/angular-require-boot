@@ -6,12 +6,10 @@
 </head>
 <body>
 	<div>
-		<h2>{{storyHeading}}</h2>
-		{{chapter1}}<br>
-		{{chapter2}}<br>
-		{{chapter3}}<br>
-		{{chapter4}}<br>
-		{{chapter5}}
+		<div ng-repeat="chapter in storyCtrl.chapters">
+			<h2> {{chapter.heading}} </h2>
+			{{chapter.text}}
+		</div>
 	</div>
 </body>
 </html>

@@ -1,6 +1,8 @@
 /**
  * Created by Srikanth on 9/1/2015.
  */
+(function() {
+'use strict';
 define([
     'angular',
     'd3'
@@ -23,16 +25,17 @@ define([
 //        });
 //    }])
 
-    .controller('d3Controller', ['$scope', 'mapFactory', 'scales', 'tracker', function($scope, mapFactory, scaleService, tracker) {
+    .controller('d3Ctrl', ['$scope', 'mapFactory', 'scales', 'tracker', function($scope, mapFactory, scaleService, tracker) {
 
-        $scope.chartData = [10,20,30,40,50];
-        $scope.matrixData = [
+    	var self = this;
+        self.chartData = [10,20,30,40,50];
+        self.matrixData = [
             [11975,  5871, 8916, 2868],
             [ 1951, 10048, 2060, 6171],
             [ 8010, 16145, 8090, 8045],
             [ 1013,   990,  940, 6907]
         ];
-        $scope.percent = tracker.getPercent();
+        self.percent = tracker.getPercent();
         
         //circleService.circle();
         //lineService.line();
@@ -44,7 +47,7 @@ define([
         $scope.$watch(
             function(){ return tracker.getPercent() },
             function(newVal) {
-              $scope.percent = newVal;
+            	self.percent = newVal;
             }
         );
 
@@ -52,7 +55,7 @@ define([
         
     }])
 
-    .service('tracker', ['d3Service', '$timeout', function(d3Service, $timeout) {
+    .service('tracker', ['d3Factory', '$timeout', function(d3Factory, $timeout) {
 
         this.percent = '40%';
         var self = this;
@@ -71,8 +74,8 @@ define([
         }
     }])
 
-    .service('scales', ['d3Service', function(d3Service) {
-        var d3 = d3Service.d3();
+    .service('scales', ['d3Factory', function(d3Factory) {
+        var d3 = d3Factory.d3();
         var data = [20, 40, 50];
 
         return {
@@ -125,7 +128,7 @@ define([
         }
     }])
 
-    .factory('d3Service', ['$q', '$window', '$rootScope', '$document', function($q, $window, $rootScope, $document) {
+    .factory('d3Factory', ['$q', '$window', '$rootScope', '$document', function($q, $window, $rootScope, $document) {
 
         //var d = $q.defer();
         //
@@ -152,11 +155,11 @@ define([
 
     }])
 
-    .service("mercatorService", ['d3Service', function(d3Service) {
+    .service("mercatorService", ['d3Factory', function(d3Factory) {
         var self = this;
         return {
             showMap : function(data) {
-                var d3 = d3Service.d3();
+                var d3 = d3Factory.d3();
 
                 var canvas = d3.select('body')
                     .append('svg')
@@ -226,65 +229,62 @@ define([
         };
     }])
 
-    .directive('barChart', ['d3Service', function(d3Service) {
-
+    .directive('barChart', ['$window', function($window) {
         var myDirective = {
+          scope: { },
+          controllerAs: 'barCtrl',
+          controller: function() { },
+          bindToController: { chartData : '='},
+          restrict: 'EA',
+          replace: false,
+          link: function (scope, elem, attrs, barCtrl) {
+            var data = attrs.chartData.split(',');
+            var d3 = $window.d3;
+            var chart = d3.select(elem[0]);
 
-            scope: {
-                chartData: '=',
-                matrixData: '='
-            },
+            chart
+            	.append("div")
+                .attr("class", "chart")
 
-            restrict: 'EA',
-
-            replace: false,
-
-            link: function (scope, elem, attrs) {
-                var data = attrs.chartData.split(',');
-                var d3 = d3Service.d3();
-                var chart = d3.select(elem[0]);
-
-                chart
-                	.append("div")
-                    .attr("class", "chart")
-
-                    //returns an array of all <div>...</div> elements in div
-                    .selectAll("div")
-                        .data(scope.chartData)
-                    .enter()
-                        .append("div")
-                        .transition().ease("elastic")
-                        .style("width", function (d) {
-                            return d + "%"
-                        })
-                        .text(function (d) {
-                            return d + "%"
-                        });
+                //returns an array of all <div>...</div> elements in div
+                .selectAll("div")
+                    .data(barCtrl.chartData)
+                .enter()
+                    .append("div")
+                    .transition().ease("elastic")
+                    .style("width", function (d) {
+                        return d + "%"
+                    })
+                    .text(function (d) {
+                        return d + "%"
+                    });
             }
         }
         return myDirective;
     }])
 
-    .directive('matrix', ['d3Service', function(d3Service) {
+
+    .directive('matrix', ['$window', function($window) {
 
         var myDirective = {
 
-            scope: {
-                matrixData: '=matrixData'
-            },
+            scope: { },
+            controllerAs: 'matrixCtrl',
+            bindToController: { matrixData: '=' },
+            controller: function() { },
 
             restrict: 'EA',
 
             replace: false,
 
-            link: function (scope, elem, attrs) {
-                var d3 = d3Service.d3();
+            link: function (scope, elem, attrs, matrixCtrl) {
+                var d3 = $window.d3;
                 var matrix = d3.select(elem[0]);
 
                 var tr = matrix
                     .append("table")
                     .selectAll("tr")
-                    .data(scope.matrixData)
+                    .data(matrixCtrl.matrixData)
                     .enter()
                     .append("tr");
 
@@ -302,13 +302,13 @@ define([
         return myDirective;
     }])
 
-    .factory('circleService', ['d3Service', function(d3Service) {
+    .factory('circleService', ['d3Factory', function(d3Factory) {
 
         var data = [10, 20, 30]
 
         return {
                 circle : function () {
-                    var d3 = d3Service.d3();
+                    var d3 = d3Factory.d3();
                     //d3.select("body").append("p").html("First paragraph");
                     //d3.select("body").append("p").html("Second paragraph").attr("class", "p2");
                     //d3.select("body").append("p").html("Third paragraph").attr("id", "p3");
@@ -389,7 +389,7 @@ define([
         }
     }])
 
-    .factory('lineService', ['d3Service', function(d3Service) {
+    .factory('lineService', ['d3Factory', function(d3Factory) {
         var data = [
             {x: 50, y: 100},
             {x: 100, y: 150},
@@ -398,7 +398,7 @@ define([
 
         return {
             line: function () {
-                var d3 = d3Service.d3();
+                var d3 = d3Factory.d3();
 
                 var canvas = d3.select("body")
                     .append("svg")
@@ -424,7 +424,7 @@ define([
         }
     }])
 
-    .factory('treeService', ['d3Service', 'familyService', function(d3Service, familyService) {
+    .factory('treeService', ['d3Factory', 'familyService', function(d3Factory, familyService) {
 
         return {
             tree : function() {
@@ -433,7 +433,7 @@ define([
                                     return data;
                                 });
 
-                var d3 = d3Service.d3();
+                var d3 = d3Factory.d3();
 
                 var canvas = d3.select("body")
                     .append("svg")
@@ -464,6 +464,6 @@ define([
         }
     }])
 })
-;
+})();
 
 

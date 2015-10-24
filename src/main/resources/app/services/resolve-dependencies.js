@@ -1,3 +1,5 @@
+(function() {
+'use strict';
 define([], function()
 {
     return function(dependencies)
@@ -23,3 +25,4 @@ define([], function()
         return definition;
     }
 });
+})();

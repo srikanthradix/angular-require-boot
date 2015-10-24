@@ -1,3 +1,5 @@
+(function() {
+'use strict';
 define([
     'angular',
     'angularAnimate',
@@ -5,14 +7,14 @@ define([
 ], function(angular) {
 	angular.module('myApp.view3.carousel', ['ui.router', 'ngAnimate', 'ui.bootstrap'])
 	
-	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-		$stateProvider
-    	.state('view3', {
-    		url: '/view3',
-    		 templateUrl:  'carousel/carousel.html',
-	        controller: 'CarouselDemoCtrl'
-        })
-	}])
+//	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+//		$stateProvider
+//    	.state('view3', {
+//    		url: '/view3',
+//    		 templateUrl:  'carousel/carousel.html',
+//	        controller: 'CarouselDemoCtrl'
+//        })
+//	}])
 
 //    .config(['$routeProvider', function($routeProvider) {
 //        $routeProvider.when('/view3', {
@@ -21,13 +23,14 @@ define([
 //        });
 //    }])
 
-    .controller('CarouselDemoCtrl', ['$scope', function($scope) {
-        $scope.myInterval = 6000;
-        $scope.noWrapSlides = false;
+    .controller('CarouselDemoCtrl', [function() {
+    	var self = this;
+        self.myInterval = 6000;
+        self.noWrapSlides = false;
 
-        var slides = $scope.slides = [];
+        var slides = self.slides = [];
 
-        $scope.addSlide = function() {
+        self.addSlide = function() {
             var self = this;
             var width = 600 + self.slides.length + 1;
             self.slides.push({
@@ -38,22 +41,23 @@ define([
         };
 
         for(var i=0; i<4; i++) {
-            $scope.addSlide();
+            self.addSlide();
         }
     }])
 
-    .controller('DateDemoCtrl', ['$scope', function($scope) {
-        $scope.status = {
+    .controller('DateDemoCtrl', [function() {
+    	var self = this;
+        self.status = {
             opened : false
         }
 
-        $scope.open = function($event) {
-            $scope.status.opened = true;
+        self.open = function($event) {
+            self.status.opened = true;
         }
 
-        $scope.disabled = function(date, mode) {
+        self.disabled = function(date, mode) {
             return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
         }
     }])
 })
-;
+})();

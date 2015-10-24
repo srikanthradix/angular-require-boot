@@ -1,3 +1,4 @@
+(function() {
 'use strict';
 
 define([
@@ -41,3 +42,4 @@ define([
 	
 	.value('version', '0.4');
 })
+})();

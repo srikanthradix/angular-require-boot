@@ -7,14 +7,13 @@
 <body>
 
     <div>
-        <bar-chart chart-data="chartData"></bar-chart>
-        <matrix matrix-data="matrixData"></matrix>
+        <bar-chart chart-data="d3C.chartData"></bar-chart>
     </div>
     <div id="scales"></div>
 
     <div class="progress">
-        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" ng-style="{'width':percent}">
-            {{percent}}
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" ng-style="{'width':d3C.percent}">
+            {{d3C.percent}}
         </div>
     </div>
 

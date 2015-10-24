@@ -1,6 +1,8 @@
 /**
  * Created by Srikanth on 8/24/2015.
  */
+(function() {
+'use strict';
 define([
     'angular',
 ], function(angular) {
@@ -210,4 +212,4 @@ define([
         }
     }])
 })
-;
+})();

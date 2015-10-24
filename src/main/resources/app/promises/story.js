@@ -1,13 +1,16 @@
+(function() {
+'use strict';
 define([
     'angular'
 ], function(angular) {
 	angular.module('myApp.view7.story', ['ui.router'])
-	
+//	
 //	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 //		$stateProvider
 //    	.state('view7', {
 //    		url: '/view7',
 //    		templateUrl:  'promises/story.html',
+//    		controllerAs: 'story',
 //	        controller: 'storyController'
 //        })
 //	}])
@@ -46,19 +49,22 @@ define([
 	    }
 	}])
 	
-	.controller('storyController', ['storyService', 'storyServiceUsingMap', '$scope', function(storyService, storyServiceUsingMap, $scope) {
-		  var firstChapters = ['chapter-1', 'chapter-2'];
+	.controller('storyController', ['storyService', 'storyServiceUsingMap', function(storyService, storyServiceUsingMap) {
+		  var self = this;
+		  self.chapters = [ ];
+		  var firstChapters = ['chapter-1', 'chapter-2', 'chapter-3'];
 		  storyService.getText(firstChapters)
 		  	.then(function(responses) {
-		  		$scope.chapter1 = responses[0].data;
-  		        $scope.chapter2 = responses[1].data;
+	  			self.chapters.push(responses[0].data);
+	  			self.chapters.push(responses[1].data);
+	  			self.chapters.push(responses[2].data);
 			  })
 			  
-		  var lastChapters = ['chapter-3', 'chapter-4'];
+		  var lastChapters = ['chapter-4', 'chapter-5'];
 		  storyServiceUsingMap.getText(lastChapters)
 		  	.then(function(responses) {
-		  		$scope.chapter3 = responses[0].data;
-  		        $scope.chapter4 = responses[1].data;
+		  		self.chapters.push(responses[0].data);
+	  			self.chapters.push(responses[1].data);
 			  })			  
 	}])
 	
@@ -69,3 +75,4 @@ define([
 	  })
 	
 })
+})();

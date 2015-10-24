@@ -1,10 +1,10 @@
+(function() {
 'use strict';
-
-define([
+	define([
     'angular',
     'components/version/version'
 ], function(angular) {
-	angular.module('myApp.view1.mouse', ['ui.router', 'myApp.version'])
+	angular.module('myApp.view1.directivesAndTemplates', ['ui.router', 'myApp.version'])
 	
 //	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 //		$stateProvider
@@ -37,18 +37,16 @@ define([
         };
     })
 
-    .controller('View1Ctrl', [function() {
-
-    }])
-
-    .controller('treeController', ['$scope', function($scope) {
-        $scope.expand_collapse = function(data) {
+    .controller('DirAndTemplatesCtrl', [function() {
+    	
+    	var self = this;
+    	self.expand_collapse = function(data) {
             data.show = !data.show;
         }
-        $scope.deleteNode = function(data) {
+    	self.deleteNode = function(data) {
             data.nodes = []
         }
-        $scope.addNode = function(data) {
+    	self.addNode = function(data) {
             var noOfNodes = data.nodes.length + 1;
             var newName = data.name + '-' + noOfNodes
             data.nodes.push(
@@ -63,7 +61,7 @@ define([
                 }
             );
         }
-        $scope.tree = [
+    	self.tree = [
             {   name: 'Node',
                 nodes: [],
                 currencies: [
@@ -74,6 +72,15 @@ define([
                 show: true
             }
         ];
+        
+    	self.loginData = false;
+    	self.login = function() {
+    		self.loginData = true;
+        };
+        self.logout = function() {
+        	self.loginData = false;
+        }
+
     }])
 
     .directive( 'editInPlace', function() {
@@ -117,14 +124,6 @@ define([
         };
     })
 
-    .controller('LoginController', ['$scope', function($scope) {
-        $scope.loginData = false;
-        $scope.login = function() {
-            $scope.loginData = true;
-        };
-        $scope.logout = function() {
-            $scope.loginData = false;
-        }
-    }])
 })
+})();
 
