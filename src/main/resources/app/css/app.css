@@ -16,7 +16,7 @@
     background: lightsteelblue;
 }
 
-menu > ul {
+.menu > ul {
     margin-bottom: 0;
 }
 .menu > li{
@@ -70,15 +70,6 @@ menu > ul {
   /*padding: 2px;*/
 /*}*/
 
-table, th, td {
-    border: 1px solid black;
-    padding: 2px;
-}
-
-td {
-    padding: 10px;
-}
-
 .chart {
     background: #eee;
     padding: 3px;
@@ -113,7 +104,7 @@ td {
 }
 
 .progress-bar.active, .progress.active .progress-bar {
-    animation: 10s linear 0s normal none infinite running progress-bar-stripes;
+    animation: 10s linear 0s normal none infinite running;
 }
 .progress-bar-striped, .progress-striped .progress-bar {
     background-image: repeating-linear-gradient(45deg,
@@ -142,4 +133,34 @@ td {
 }
 .sortorder.reverse:after {
   content: '\25bc';
+}
+
+.my-table {
+    width: 90% !important;
+}
+
+.my-table td {
+    text-align: center !important;
+    vertical-align:middle !important;
+}
+
+.my-span {
+    width: 15%;
+    padding: 8px 25px;
+    text-decoration: none;
+    background: lightsteelblue;
+}
+
+* { font-family: 'Arvo', serif !important; }
+
+.glyphicon {
+    font-family: 'Glyphicons Halflings' !important;
+}
+
+.centered > ul{
+    position: relative !important;
+    top: 70% !important;
+    left: 50% !important;
+    -webkit-transform: translate(-50%, -50%) !important;
+    transform: translate(-50%, -50%) !important;
 }

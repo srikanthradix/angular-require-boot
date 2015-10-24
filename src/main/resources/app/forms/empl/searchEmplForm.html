@@ -16,8 +16,8 @@
         </button>
     </form>
     <br/> <br/>
-    <pre> Displaying Number of Entries: <input type="number" ng-model="srchC.itemsPerPage"> </pre>
-    <table id="searchResults" class="table table-bordered table-striped">
+    <span class="my-span"> Displaying Number of Entries :  <input type="number" ng-model="srchC.itemsPerPage" max="100" min="0"> </span>
+    <table id="searchResults" class="table table-bordered table-striped my-table">
         <thead>
         <tr>
             <td><input type="checkbox" ng-model="srchC.selectedAll" ng-click="srchC.selectAll()">
@@ -31,8 +31,11 @@
                       ng-class="{reverse:srchC.reverse}"></span>
             </th>
             </th>
-            <td>Department
+            <td>Department</td>
             </th>
+            <td>-</td>
+            </th>
+
         </tr>
         </thead>
         <tbody>
@@ -50,10 +53,15 @@
                 </edit-in-place>
             </td>
             <td>{{emp.department.name}}</td>
+            <td><a href="" ng-click="srchC.removeEmployee($index)">D</a></td>
         </tr>
         </tbody>
     </table>
-    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)"
+    <br/>
+
+    <button type="button" ng-click="srchC.navigate('main.view2a')" class="btn btn-info float-left">Add Employee</button>
+
+    <dir-pagination-controls class="centered" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)"
                              template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
 
 </div>

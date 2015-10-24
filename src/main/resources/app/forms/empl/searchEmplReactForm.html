@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<div>
+    <form>
+        <input type="search" ng-model="srchC.dept" ng-change="srchC.search(srchC.dept)" class="form-input"
+               required="" autofocus placeholder="Search Department...">
+        <button type="button" ng-click="srchC.download()"
+                class="btn btn-info float-right">
+            Download <span class="glyphicon glyphicon-download-alt"></span>
+        </button>
+    </form>
+    <br/> <br/>
+    <span class="my-span"> Displaying Number of Entries :  <input type="number" ng-model="srchC.itemsPerPage" max="100" min="0"> </span>
+    <table id="searchResults" class="table table-bordered table-striped my-table">
+        <thead>
+        <tr>
+            <td><input type="checkbox" ng-model="srchC.selectedAll" ng-click="srchC.selectAll()">
+            </th>
+            <td>Id
+            </th>
+            <td>Name
+            </th>
+            <td><a href="" ng-click="srchC.order('salary')">Salary</a>
+                <span class="sortorder" ng-show="srchC.predicate === 'salary'"
+                      ng-class="{reverse:srchC.reverse}"></span>
+            </th>
+            </th>
+            <td>Department</td>
+            </th>
+            <td>-</td>
+            </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <display-with-react employees="srch.emps"></display-with-react>
+        </tbody>
+    </table>
+    <br/>
+
+</div>
+<br/>
+</body>
+</html>
