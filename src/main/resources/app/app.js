@@ -80,7 +80,7 @@
                     cacheProviders.$provide = $provide;
                 })();
 
-                var lazyCtrlLoad = function (controllerName) {
+                var lazyLoad = function (controllerName) {
                     return ["$q", function ($q) {
                         var deferred = $q.defer();
                         require([controllerName], function () {
@@ -110,7 +110,7 @@
                         controllerAs: 'nefC',
                         controller: 'NewEmplCtrl'
                         //resolve: {
-                        //    loadOtherCtrl: lazyCtrlLoad('newEmplCtrl')
+                        //    load: lazyLoad('newEmplCtrl')
                         //}
                     })
                     .state('main.view2b', {
@@ -119,7 +119,7 @@
                         controllerAs: 'srchC',
                         controller: 'searchEmplCtrl'
                         //resolve: {
-                        //    loadOtherCtrl: lazyCtrlLoad('searchEmplCtrl')
+                        //    load: lazyLoad('searchEmplCtrl')
                         //}
                     })
                     .state('main.view3', {
@@ -128,7 +128,7 @@
                         controllerAs: 'crslCtrl',
                         controller: 'carouselCtrl',
                         resolve: {
-                            loadOtherCtrl: lazyCtrlLoad('carouselCtrl')
+                            load: lazyLoad('carouselCtrl')
                         }
                     })
                     .state('main.view4', {
@@ -137,7 +137,7 @@
                         controllerAs: 'd3C',
                         controller: 'd3Ctrl',
                         resolve: {
-                            loadOtherCtrl: lazyCtrlLoad('d3Ctrl')
+                            load: lazyLoad('d3Ctrl')
                         }
                     })
                     .state('main.view5', {
@@ -146,7 +146,7 @@
                         controllerAs: 'sockCtrl',
                         controller: 'sockIOCtrl',
                         resolve: {
-                            loadOtherCtrl: lazyCtrlLoad('sockIOCtrl')
+                            load: lazyLoad('sockIOCtrl')
                         }
                     })
                     .state('main.view6', {
@@ -154,7 +154,7 @@
                         templateUrl: 'scope/scope.html',
                         controller: 'scopeCtrl',
                         resolve: {
-                            loadOtherCtrl: lazyCtrlLoad('scopeCtrl')
+                            load: lazyLoad('scopeCtrl')
                         }
                     })
                     .state('main.view7', {
@@ -163,7 +163,7 @@
                         controllerAs: 'storyC',
                         controller: 'storyCtrl',
                         resolve: {
-                            loadOtherCtrl: lazyCtrlLoad('storyCtrl')
+                            load: lazyLoad('storyCtrl')
                         }
                     })
                     .state('main.view8', {
@@ -172,7 +172,7 @@
                         controllerAs: 'filterC',
                         controller: 'filterCtrl',
                         resolve: {
-                            loadOtherCtrl: lazyCtrlLoad('filterCtrl')
+                            load: lazyLoad('filterCtrl')
                         }
                     })
                 $urlRouterProvider.otherwise('/main/view1');
