@@ -6,24 +6,10 @@ define([
     'angularUIBootstrap'
 ], function(angular) {
 	angular.module('myApp.view3.carousel', ['ui.router', 'ngAnimate', 'ui.bootstrap'])
-	
-//	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-//		$stateProvider
-//    	.state('view3', {
-//    		url: '/view3',
-//    		 templateUrl:  'carousel/carousel.html',
-//	        controller: 'CarouselDemoCtrl'
-//        })
-//	}])
 
-//    .config(['$routeProvider', function($routeProvider) {
-//        $routeProvider.when('/view3', {
-//            templateUrl: 'carousel/carousel.html',
-//            controller: 'CarouselDemoCtrl'
-//        });
-//    }])
-
-    .controller('CarouselDemoCtrl', [function() {
+    angular.module('myApp')
+        .getControllerProvider()
+        .register('carouselCtrl', [function() {
     	var self = this;
         self.myInterval = 6000;
         self.noWrapSlides = false;
@@ -45,7 +31,9 @@ define([
         }
     }])
 
-    .controller('DateDemoCtrl', [function() {
+    angular.module('myApp')
+        .getControllerProvider()
+        .register('DateCtrl', [function() {
     	var self = this;
         self.status = {
             opened : false

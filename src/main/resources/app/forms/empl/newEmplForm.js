@@ -21,7 +21,7 @@
                 $urlRouterProvider.otherwise('/main/view2a');
             }])
 
-            .controller('NewEmplController', ['$state', 'empService', function ($state, empService) {
+            .controller('NewEmplCtrl', ['$state', 'empService', function ($state, empService) {
                 var self = this;
                 self.master = self.master || {};
                 self.view2a = self.view2a || {};

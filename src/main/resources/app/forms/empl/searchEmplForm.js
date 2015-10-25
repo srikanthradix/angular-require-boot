@@ -5,11 +5,14 @@
     'use strict';
 
     define([
-        'angular', 'angularUtils', 'react'
+        'angular', 'angularResource', 'angularUtils', 'react'
     ], function (angular) {
-        angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'angularUtils.directives.dirPagination', /*'React'*/])
+        angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination', /*'React'*/])
 
-            .controller('SearchEmplController', ['srchFormService', '$state', function (srchFormService, $state) {
+        //angular.module('myApp')
+        //    .getControllerProvider()
+        //    .register
+        .controller('searchEmplCtrl', ['srchFormService', '$state', function (srchFormService, $state) {
                 var self = this;
                 self.itemsPerPage = srchFormService.getItemsPerPage();
                 self.predicate = srchFormService.getPredicate();
@@ -41,7 +44,9 @@
 
             }])
 
-            .service('empReactRenderer', ['React', function() {
+        //angular.module('myApp')
+        //    .getProvider()
+            .service('empReactRenderer', ['React', function () {
                 var self = this;
                 self.render = function () {
                     var employees = this.props.employees;
@@ -75,16 +80,18 @@
                 }
             }])
 
+        //angular.module('myApp')
+        //    .getCompileProvider()
             .directive('displayWithReact', ['React', 'empReactRenderer', function (React, empReactRenderer) {
                 var self = this || {};
 
                 self.link = function (scope, elem, attrs, reactCtrl) {
-                    scope.$watch(angular.bind(this, function() {
+                    scope.$watch(angular.bind(this, function () {
                         //this is the "this" parent directive, not a child
                         var employees = reactCtrl.employees;
-                    }), function(newVal, oldVal) {
+                    }), function (newVal, oldVal) {
                         var myEmpReactRenderer = empReactRenderer.create();
-                        React.renderComponent(myEmpReactRenderer({employees:newVal}), elem[0]);
+                        React.renderComponent(myEmpReactRenderer({employees: newVal}), elem[0]);
                     })
                 }
 
@@ -104,6 +111,8 @@
                 }
             }])
 
+        //angular.module('myApp')
+        //    .getCompileProvider()
             .directive('editInPlace', function () {
                 var self = this || {};
 
@@ -161,10 +170,14 @@
                 };
             })
 
+        //angular.module('myApp')
+        //    .getProvider()
             .service('deptService', ['$resource', function ($resource) {
                 return $resource('/dept/:dept', {dept: '@_dept'});
             }])
 
+        //angular.module('myApp')
+        //    .getProvider()
             .service('srchFormService', ['deptService', function (deptService) {
                 var self = this;
                 self.master = {};

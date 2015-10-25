@@ -13,7 +13,16 @@
             d3: 'bower_components/d3/d3',
             sockjs: 'bower_components/sockjs/sockjs',
             stomp: 'bower_components/stomp-websocket/lib/stomp',
-            react: 'bower_components/react/react'
+            react: 'bower_components/react/react',
+
+            //app scripts
+            d3Ctrl: 'd3js/d3js',
+            sockIOCtrl: 'sockio/sockclient',
+            carouselCtrl: 'carousel/carousel',
+            filterCtrl: 'filters/filters',
+            storyCtrl: 'promises/story',
+            scopeCtrl: 'scope/scope'
+            //searchEmplCtrl: 'forms/empl/searchEmplForm'
         },
         shim: {
             'angular': {'exports': 'angular'},
@@ -45,6 +54,7 @@
             'angular',
             'angularUIBootstrap',
             'angularUIRouter',
+            'angularResource',
             'app',
         ], function (angular, app) {
             var $html = angular.element(document.getElementsByTagName('html')[0]);

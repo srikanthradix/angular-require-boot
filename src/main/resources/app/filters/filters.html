@@ -5,29 +5,29 @@
 
 <br/>
 <div>
-    {{ friendsC.greeting }} <br/>
-    <label>Two times the value of <input ng-model="friendsC.num"> is {{ doubleVal(num) }}</label> <br/>
+    {{ filterC.greeting }} <br/>
+    <label>Two times the value of <input ng-model="filterC.num"> is {{ doubleVal(num) }}</label> <br/>
 
     <br/>
-    <label>Search: <input ng-model="friendsC.searchText"><br/> </label>
+    <label>Search: <input ng-model="filterC.searchText"><br/> </label>
     <br/>
     <table id="searchTextResults" class="table table-bordered table-striped">
         <tr><th>Name</th><th>Phone</th></tr>
-        <tr ng-repeat="friend in friendsC.friends | filter:friendsC.searchText:friendsC.strict">
+        <tr ng-repeat="friend in filterC.friends | filter:filterC.searchText:filterC.strict">
             <td>{{friend.name}}</td>
             <td>{{friend.phone}}</td>
         </tr>
     </table>
 
     <br/>
-    <label>Any: <input ng-model="friendsC.search.$"/></label><br/>
-    <label>Name: <input ng-model="friendsC.search.name"></label><br/>
-    <label>Phone: <input ng-model="friendsC.search.phone"></label><br/>
-    <label>Equality:<input type="checkbox" ng-model="friendsC.strict"></label><br/>
+    <label>Any: <input ng-model="filterC.search.$"/></label><br/>
+    <label>Name: <input ng-model="filterC.search.name"></label><br/>
+    <label>Phone: <input ng-model="filterC.search.phone"></label><br/>
+    <label>Equality:<input type="checkbox" ng-model="filterC.strict"></label><br/>
     <br/>
     <table id="searchVariousCriteria" class="table table-bordered table-striped">
         <tr><th>Name</th><th>Phone</th></tr>
-        <tr ng-repeat="friend in friendsC.friends | filter:friendsC.search:friendsC.strict">
+        <tr ng-repeat="friend in filterC.friends | filter:filterC.search:filterC.strict">
             <td>{{friend.name}}</td>
             <td>{{friend.phone}}</td>
         </tr>
@@ -37,6 +37,6 @@
 
 </div>
 
-<div ng-controller="WeatherController as weatherC">
-    <label> Current weather is: {{ weatherC.weather }}</label>
+<div>
+    <label> Current weather is: {{ filterC.weather }}</label>
 </div>

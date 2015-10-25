@@ -2,65 +2,94 @@
     'use strict';
 
     define(['angular',
+        'functions/utils',
+        'components/version/version',
         'events/directivesAndTemplates',
         'forms/empl/newEmplForm',
-        'forms/empl/searchEmplForm',
-        'd3js/d3js',
-        'carousel/carousel',
-        'sockio/sockclient',
-        'scope/scope',
-        'promises/story',
-        'filters/filters'
+        'forms/empl/searchEmplForm'
     ], function (angular) {
-        angular.module('myApp', ['ui.router', 'ui.bootstrap',
+        var app = angular.module('myApp', ['ui.router', 'ui.bootstrap',
+            'myApp.functions',
+            'myApp.version',
             'myApp.view1.directivesAndTemplates',
             'myApp.view2a.newEmplForm',
-            'myApp.view2b.searchEmplForm',
-            'myApp.view3.carousel',
-            'myApp.view4.d3js',
-            'myApp.view5.sockio',
-            'myApp.view6.scope',
-            'myApp.view7.story',
-            'myApp.view8.filters'
+            'myApp.view2b.searchEmplForm'
         ])
-            .controller('TabController', ['$scope', '$state', function ($scope, $state) {
-                var self = this;
-                self.tabs = [
-                    {route: 'main.view1', title: "Directives and Templates", active: false},
-                    {
-                        route: '', title: "Forms", active: false,
-                        dropdown: [
-                            {route: 'main.view2a', title: "NewForm", active: false},
-                            {route: 'main.view2b', title: "SearchForm", active: false},
-                        ]
-                    },
-                    {route: 'main.view3', title: "Carousel", active: false},
-                    {route: 'main.view4', title: "D3", active: false},
-                    {route: 'main.view5', title: "SockIO", active: false},
-                    {route: 'main.view6', title: "Scope", active: false},
-                    {route: 'main.view7', title: "Promises", active: false},
-                    {route: 'main.view8', title: "Filters", active: false},
-                ];
 
-                self.go = function (route) {
-                    if (route) {
-                        $state.go(route);
-                    }
-                };
+        app.controller('TabController', ['$scope', '$state', function ($scope, $state) {
+            var self = this;
+            self.tabs = [
+                {route: 'main.view1', title: "Directives and Templates", active: false},
+                {
+                    route: '', title: "Forms", active: false,
+                    dropdown: [
+                        {route: 'main.view2a', title: "NewForm", active: false},
+                        {route: 'main.view2b', title: "SearchForm", active: false},
+                    ]
+                },
+                {route: 'main.view3', title: "Carousel", active: false},
+                {route: 'main.view4', title: "D3", active: false},
+                {route: 'main.view5', title: "SockIO", active: false},
+                {route: 'main.view6', title: "Scope", active: false},
+                {route: 'main.view7', title: "Promises", active: false},
+                {route: 'main.view8', title: "Filters", active: false},
+            ];
 
-                self.active = function (route) {
-                    return $state.is(route);
-                };
+            self.go = function (route) {
+                if (route) {
+                    $state.go(route);
+                }
+            };
 
-                $scope.$on("$stateChangeSuccess", function () {
-                    self.tabs.forEach(function (tab) {
-                        tab.active = self.active(tab.route);
-                    });
+            self.active = function (route) {
+                return $state.is(route);
+            };
+
+            $scope.$on("$stateChangeSuccess", function () {
+                self.tabs.forEach(function (tab) {
+                    tab.active = self.active(tab.route);
                 });
+            });
+        }])
 
-            }])
+        var cacheProviders = {};
 
-            .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+        app.getProvider = function () {
+            return cacheProviders.$provide;
+        }
+
+        app.getCompileProvider = function () {
+            return cacheProviders.$compileProvider;
+        }
+
+        app.getControllerProvider = function () {
+            return cacheProviders.$controllerProvider;
+        }
+
+        app.getFilterProvider = function () {
+            return cacheProviders.$filterProvider;
+        }
+
+        app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
+            function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider, $filterProvider, $provide) {
+
+                (function () {
+                    cacheProviders.$controllerProvider = $controllerProvider;
+                    cacheProviders.$compileProvider = $compileProvider;
+                    cacheProviders.$filterProvider = $filterProvider;
+                    cacheProviders.$provide = $provide;
+                })();
+
+                var lazyCtrlLoad = function (controllerName) {
+                    return ["$q", function ($q) {
+                        var deferred = $q.defer();
+                        require([controllerName], function () {
+                            deferred.resolve();
+                        });
+                        return deferred.promise;
+                    }];
+                }
+
                 $stateProvider
                     .state('main', {
                         abstract: true,
@@ -79,50 +108,74 @@
                         url: '/view2a',
                         templateUrl: 'forms/empl/newEmplForm.html',
                         controllerAs: 'nefC',
-                        controller: 'NewEmplController'
+                        controller: 'NewEmplCtrl'
+                        //resolve: {
+                        //    loadOtherCtrl: lazyCtrlLoad('newEmplCtrl')
+                        //}
                     })
                     .state('main.view2b', {
                         url: '/view2b',
                         templateUrl: 'forms/empl/searchEmplForm.html',
                         controllerAs: 'srchC',
-                        controller: 'SearchEmplController'
+                        controller: 'searchEmplCtrl'
+                        //resolve: {
+                        //    loadOtherCtrl: lazyCtrlLoad('searchEmplCtrl')
+                        //}
                     })
                     .state('main.view3', {
                         url: '/view3',
                         templateUrl: 'carousel/carousel.html',
-                        controllerAs: 'carouselCtrl',
-                        controller: 'CarouselDemoCtrl'
+                        controllerAs: 'crslCtrl',
+                        controller: 'carouselCtrl',
+                        resolve: {
+                            loadOtherCtrl: lazyCtrlLoad('carouselCtrl')
+                        }
                     })
                     .state('main.view4', {
                         url: '/view4',
                         templateUrl: 'd3js/d3js.html',
                         controllerAs: 'd3C',
-                        controller: 'd3Ctrl'
+                        controller: 'd3Ctrl',
+                        resolve: {
+                            loadOtherCtrl: lazyCtrlLoad('d3Ctrl')
+                        }
                     })
                     .state('main.view5', {
                         url: '/view5',
                         templateUrl: 'sockio/sockclient.html',
                         controllerAs: 'sockCtrl',
-                        controller: 'sockIOController'
+                        controller: 'sockIOCtrl',
+                        resolve: {
+                            loadOtherCtrl: lazyCtrlLoad('sockIOCtrl')
+                        }
                     })
                     .state('main.view6', {
                         url: '/view6',
                         templateUrl: 'scope/scope.html',
-                        controller: 'scopeController'
+                        controller: 'scopeCtrl',
+                        resolve: {
+                            loadOtherCtrl: lazyCtrlLoad('scopeCtrl')
+                        }
                     })
                     .state('main.view7', {
                         url: '/view7',
                         templateUrl: 'promises/story.html',
-                        controllerAs: 'storyCtrl',
-                        controller: 'storyController'
+                        controllerAs: 'storyC',
+                        controller: 'storyCtrl',
+                        resolve: {
+                            loadOtherCtrl: lazyCtrlLoad('storyCtrl')
+                        }
                     })
                     .state('main.view8', {
                         url: '/view8',
                         templateUrl: 'filters/filters.html',
-                        controllerAs: 'friendsC',
-                        controller: 'FriendsController'
+                        controllerAs: 'filterC',
+                        controller: 'filterCtrl',
+                        resolve: {
+                            loadOtherCtrl: lazyCtrlLoad('filterCtrl')
+                        }
                     })
-                $urlRouterProvider.otherwise('/main/view7');
+                $urlRouterProvider.otherwise('/main/view1');
             }])
     })
 })();

@@ -164,3 +164,7 @@
     -webkit-transform: translate(-50%, -50%) !important;
     transform: translate(-50%, -50%) !important;
 }
+
+.my-carousel {
+    height: 350px;
+}

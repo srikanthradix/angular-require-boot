@@ -1,13 +1,13 @@
 (function () {
     'use strict';
     define([
-        'angular',
-        'functions/utils',
-        'components/version/version'
+        'angular'
     ], function (angular) {
-        angular.module('myApp.view8.filters', ['myApp.functions', 'myApp.version'])
+        angular.module('myApp.view8.filters', [ ])
 
-            .controller('FriendsController', ['friendsFactory', function (friendsFactory) {
+        angular.module('myApp')
+            .getControllerProvider()
+            .register('filterCtrl', ['friendsFactory', 'weatherService', function (friendsFactory, weatherService) {
                 var self = this;
                 self.greeting = 'Hola!';
 
@@ -20,10 +20,7 @@
                     .finally(function () {
                         console.log('Finished at:', new Date());
                     });
-            }])
 
-            .controller('WeatherController', ['weatherService', function (weatherService) {
-                var self = this;
                 self.weatherReport = function () {
                     weatherService.getWeather()
                         .then(function (data) {
