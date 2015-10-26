@@ -5,8 +5,8 @@
         'functions/utils',
         'components/version/version',
         'events/directivesAndTemplates',
-        'forms/empl/newEmplForm',
-        'forms/empl/searchEmplForm'
+        'forms/empl/new/newEmplForm',
+        'forms/empl/search/searchEmplForm'
     ], function (angular) {
         var app = angular.module('myApp', ['ui.router', 'ui.bootstrap',
             'myApp.functions',
@@ -106,7 +106,7 @@
                     })
                     .state('main.view2a', {
                         url: '/view2a',
-                        templateUrl: 'forms/empl/newEmplForm.html',
+                        templateUrl: 'forms/empl/new/newEmplForm.html',
                         controllerAs: 'nefC',
                         controller: 'NewEmplCtrl'
                         //resolve: {
@@ -115,7 +115,7 @@
                     })
                     .state('main.view2b', {
                         url: '/view2b',
-                        templateUrl: 'forms/empl/searchEmplForm.html',
+                        templateUrl: 'forms/empl/search/searchEmplForm.html',
                         controllerAs: 'srchC',
                         controller: 'searchEmplCtrl'
                         //resolve: {
