@@ -35,27 +35,17 @@
             </th>
             <td>-</td>
             </th>
-
         </tr>
         </thead>
         <tbody>
         <tr dir-paginate="emp in srchC.emps | orderBy : srchC.predicate : srchC.reverse | itemsPerPage: srchC.itemsPerPage">
-            <td><input type="checkbox" ng-model="emp.selected"></td>
+            <td><input type="checkbox" ng-model="srchC.selectedAll" ng-click="srchC.selectAll()">
             <td>{{emp.id}}</td>
-            <td>
-                <edit-in-place value="emp.name">
-                    {{emp.name}}
-                </edit-in-place>
-            </td>
-            <td>
-                <edit-in-place value="emp.salary">
-                    {{emp.salary}}
-                </edit-in-place>
-            </td>
-            <td>{{emp.department.name}}</td>
-            <td><a href="" ng-click="srchC.removeEmployee($index)">D</a></td>
+            <td editable-field="emp.name"></td>
+            <td editable-field="emp.salary" on-save="srchC.updateEmployee(emp)"></td>
+            <td editable-field="emp.department.name"></td>
+            <td><a href="" ng-click="srchC.removeEmployee(emp)">D</a></td>
         </tr>
-        </tbody>
     </table>
     <br/>
 

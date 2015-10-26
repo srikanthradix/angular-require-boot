@@ -5,14 +5,14 @@
     'use strict';
 
     define([
-        'angular', 'angularResource', 'angularUtils', 'react'
+        'angular', 'angularResource', 'angularUtils'//, 'ngReactGrid'
     ], function (angular) {
-        angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination', /*'React'*/])
+        angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination'])
 
-        //angular.module('myApp')
-        //    .getControllerProvider()
-        //    .register
-        .controller('searchEmplCtrl', ['srchFormService', '$state', function (srchFormService, $state) {
+            //angular.module('myApp')
+            //    .getControllerProvider()
+            //    .register
+            .controller('searchEmplCtrl', ['srchFormService', '$state', function (srchFormService, $state) {
                 var self = this;
                 self.itemsPerPage = srchFormService.getItemsPerPage();
                 self.predicate = srchFormService.getPredicate();
@@ -24,8 +24,11 @@
                 self.navigate = function (route) {
                     $state.go(route);
                 }
-                self.removeEmployee = function (index) {
-                    self.emps = srchFormService.removeEmployee(index);
+                self.removeEmployee = function (emp) {
+                    self.emps = srchFormService.removeEmployee(emp);
+                }
+                self.updateEmployee = function(emp) {
+                    self.emps = srchFormService.updateEmployee(emp);
                 }
                 self.order = function (predicate) {
                     srchFormService.order(predicate);
@@ -44,9 +47,9 @@
 
             }])
 
-        //angular.module('myApp')
-        //    .getProvider()
-            .service('empReactRenderer', ['React', function () {
+            //angular.module('myApp')
+            //    .getProvider()
+            .service('empReactRenderer', ['React', function (React) {
                 var self = this;
                 self.render = function () {
                     var employees = this.props.employees;
@@ -80,8 +83,8 @@
                 }
             }])
 
-        //angular.module('myApp')
-        //    .getCompileProvider()
+            //angular.module('myApp')
+            //    .getCompileProvider()
             .directive('displayWithReact', ['React', 'empReactRenderer', function (React, empReactRenderer) {
                 var self = this || {};
 
@@ -111,73 +114,52 @@
                 }
             }])
 
-        //angular.module('myApp')
-        //    .getCompileProvider()
-            .directive('editInPlace', function () {
+            // Inline edit directive
+            .directive('editableField', ['$timeout', function ($timeout) {
                 var self = this || {};
+                self.link = function (scope, elm, attr, editCtrl) {
+                    var previousValue;
 
-                self.template = function () {
-                    return '<span ng-click="editCtrl.edit()" ng-bind="editCtrl.value"></span>' +
-                        '<input ng-model="editCtrl.value">';
-                }
-
-                self.link = function (scope, element, attrs, editCtrl) {
-                    // Let's get a reference to the input element, as we'll want to reference it.
-                    var inputElement = angular.element(element.children()[1]);
-
-                    // This directive should have a set class so we can style it.
-                    element.addClass('edit-in-place');
-
-                    // Initially, we're not editing.
-                    editCtrl.editing = false;
-
-                    // ng-click handler to activate edit-in-place
                     editCtrl.edit = function () {
-                        editCtrl.editing = true;
+                        editCtrl.editMode = true;
+                        previousValue = editCtrl.model;
 
-                        // We control display through a class on the directive itself. See the CSS.
-                        element.addClass('active');
-
-                        // And we must focus the element.
-                        // `angular.element()` provides a chainable array, like jQuery so to access a native DOM function,
-                        // we have to reference the first element in the array.
-                        inputElement[0].focus();
+                        $timeout(function () {
+                            elm.find('input')[0].focus();
+                        }, 0, false);
                     };
-
-                    // When we leave the input, we're done editing.
-                    inputElement.prop('onblur', function () {
-                        editCtrl.editing = false;
-                        element.removeClass('active');
-                    });
+                    editCtrl.save = function () {
+                        editCtrl.editMode = false;
+                        editCtrl.someCtrlFn({value: editCtrl.model});
+                    };
+                    editCtrl.cancel = function () {
+                        editCtrl.editMode = false;
+                        editCtrl.model = previousValue;
+                    };
                 }
-
                 return {
-                    restrict: 'E',
-
                     scope: {},
                     controllerAs: 'editCtrl',
                     controller: function () {
                     },
                     bindToController: {
-                        value: '='
+                        model: '=editableField',
+                        someCtrlFn: '&onSave'
                     },
-
                     transclude: true,
-
-                    template: self.template,
-
-                    link: self.link
+                    link: self.link,
+                    templateUrl: '../../templates/inline-edit.html'
                 };
-            })
+            }])
 
-        //angular.module('myApp')
-        //    .getProvider()
+            //angular.module('myApp')
+            //    .getProvider()
             .service('deptService', ['$resource', function ($resource) {
                 return $resource('/dept/:dept', {dept: '@_dept'});
             }])
 
-        //angular.module('myApp')
-        //    .getProvider()
+            //angular.module('myApp')
+            //    .getProvider()
             .service('srchFormService', ['deptService', function (deptService) {
                 var self = this;
                 self.master = {};
@@ -217,7 +199,17 @@
                     return self.emps;
                 }
 
-                self.removeEmployee = function (index) {
+                self.updateEmployee = function (emp) {
+                    var index = self.emps.indexOf(emp);
+                    console.log('index:'+index);
+                    if (~index) {
+                        self.emps[index] = emp;
+                    }
+                    return self.emps;
+                }
+
+                self.removeEmployee = function (emp) {
+                    var index = self.emps.indexOf(emp);
                     self.emps.splice(index, 1);
                     return self.emps;
                 }
