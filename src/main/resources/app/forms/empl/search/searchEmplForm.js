@@ -7,45 +7,53 @@
     define([
         'angular', 'angularResource', 'angularUtils'//, 'ngReactGrid'
     ], function (angular) {
+
         angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination'])
 
             //angular.module('myApp')
             //    .getControllerProvider()
             //    .register
-            .controller('searchEmplCtrl', ['srchFormService', '$state', function (srchFormService, $state) {
-                var self = this;
-                self.itemsPerPage = srchFormService.getItemsPerPage();
-                self.predicate = srchFormService.getPredicate();
-                self.reverse = srchFormService.getReverse();
-
-                self.search = function (dept) {
-                    self.emps = srchFormService.search(dept);
-                }
-                self.navigate = function (route) {
-                    $state.go(route);
-                }
-                self.removeEmployee = function (emp) {
-                    self.emps = srchFormService.removeEmployee(emp);
-                }
-                self.updateEmployee = function(emp) {
-                    self.emps = srchFormService.updateEmployee(emp);
-                }
-                self.order = function (predicate) {
-                    srchFormService.order(predicate);
+            .controller('searchEmplCtrl', ['$scope', '$state', 'srchFormService',
+                function ($scope, $state, srchFormService) {
+                    var self = this;
+                    self.emps = [];
+                    self.itemsPerPage = srchFormService.getItemsPerPage();
                     self.predicate = srchFormService.getPredicate();
                     self.reverse = srchFormService.getReverse();
-                }
-                self.setItemsPerPage = function (itemsPerPage) {
-                    srchFormService.setItemsPerPage(itemsPerPage);
-                    self.itemsPerPage = itemsPerPage;
-                }
-                self.selectAll = srchFormService.selectAll;
-                self.download = srchFormService.download;
-                self.reset = srchFormService.reset;
 
-                self.reset();
+                    self.search = function (dept) {
+                        self.emps = srchFormService.search(dept);
+                    }
 
-            }])
+                    self.navigate = function (route) {
+                        $state.go(route);
+                    }
+                    self.removeEmployee = function (emp) {
+                        self.emps = srchFormService.removeEmployee(emp);
+                    }
+                    self.order = function (predicate) {
+                        srchFormService.order(predicate);
+                        self.predicate = srchFormService.getPredicate();
+                        self.reverse = srchFormService.getReverse();
+                    }
+                    self.setItemsPerPage = function (itemsPerPage) {
+                        srchFormService.setItemsPerPage(itemsPerPage);
+                        self.itemsPerPage = itemsPerPage;
+                    }
+                    self.selectAll = srchFormService.selectAll;
+                    self.download = srchFormService.download;
+                    self.reset = srchFormService.reset;
+
+                    $scope.$watch(angular.bind(self, function () {
+                        return self.emps; // `this` IS the `this` above!!
+                    }), function (newVal, oldVal) {
+                        // now we will pickup changes to newVal and oldVal
+                        if (newVal === oldVal) { console.log('first time'); return; } // AKA first run
+                        console.log('self.emps updated');
+                    }, true);
+
+                    self.reset();
+                }])
 
             //angular.module('myApp')
             //    .getProvider()
@@ -115,7 +123,7 @@
             }])
 
             // Inline edit directive
-            .directive('editableField', ['$timeout', function ($timeout) {
+            .directive('editableField', function () {
                 var self = this || {};
                 self.link = function (scope, elm, attr, editCtrl) {
                     var previousValue;
@@ -124,13 +132,17 @@
                         editCtrl.editMode = true;
                         previousValue = editCtrl.model;
 
-                        $timeout(function () {
-                            elm.find('input')[0].focus();
-                        }, 0, false);
+                        elm.find('input')[0].focus();
                     };
                     editCtrl.save = function () {
                         editCtrl.editMode = false;
-                        editCtrl.someCtrlFn({value: editCtrl.model});
+                        scope.$watch(angular.bind(editCtrl, function () {
+                            return editCtrl.model;
+                        }), function (newVal, oldVal) {
+                            if (newVal === oldVal) { console.log('model first time'+newVal); return; }
+                            console.log('model updated');
+                        });
+                        //editCtrl.someCtrlFn({value: editCtrl.model});
                     };
                     editCtrl.cancel = function () {
                         editCtrl.editMode = false;
@@ -143,14 +155,14 @@
                     controller: function () {
                     },
                     bindToController: {
-                        model: '=editableField',
-                        someCtrlFn: '&onSave'
+                        model: '=editableField'
+                        //someCtrlFn: '&onSave'
                     },
                     transclude: true,
                     link: self.link,
                     templateUrl: '../../../templates/inline-edit.html'
                 };
-            }])
+            })
 
             //angular.module('myApp')
             //    .getProvider()
@@ -160,7 +172,7 @@
 
             //angular.module('myApp')
             //    .getProvider()
-            .service('srchFormService', ['deptService', function (deptService) {
+            .service('srchFormService', ['$q', 'deptService', function ($q, deptService) {
                 var self = this;
                 self.master = {};
                 self.itemsPerPage = 5;
@@ -201,7 +213,7 @@
 
                 self.updateEmployee = function (emp) {
                     var index = self.emps.indexOf(emp);
-                    console.log('index:'+index);
+                    console.log('index:' + index);
                     if (~index) {
                         self.emps[index] = emp;
                     }
