@@ -4,10 +4,9 @@
     require.config({
         paths: {
             angular: 'bower_components/angular/angular',
-            angularMocks: 'bower_components/angular-mocks/angular-mocks',
+            //angularMocks: 'bower_components/angular-mocks/angular-mocks',
             angularResource: 'bower_components/angular-resource/angular-resource',
             angularAnimate: 'bower_components/angular-animate/angular-animate',
-            angularUIBootstrap: 'bower_components/angular-bootstrap/ui-bootstrap-tpls',
             angularUIRouter: 'bower_components/angular-ui-router/release/angular-ui-router',
             angularUtils: 'bower_components/angularUtils-pagination/dirPagination',
             d3: 'bower_components/d3/d3',
@@ -29,18 +28,15 @@
             'angularResource': {
                 deps: ['angular']
             },
-            'angularMocks': {
-                deps: ['angular'],
-                'exports': 'angular.mock'
-            },
+            //'angularMocks': {
+            //    deps: ['angular'],
+            //    'exports': 'angular.mock'
+            //},
             'angularAnimate': {
                 deps: ['angular']
             },
-            'angularUIBootstrap': {
-                deps: ['angular']
-            },
             'angularUIRouter': {
-                deps: ['angular', 'angularUIBootstrap']
+                deps: ['angular']
             },
             'angularUtils': {
                 deps: ['angular']
@@ -52,7 +48,6 @@
 
     require([
             'angular',
-            'angularUIBootstrap',
             'angularUIRouter',
             'angularResource',
             'app',

@@ -8,7 +8,7 @@
 
         angular.module('myApp')
             .getControllerProvider()
-            .register('sockIOCtrl', ['$scope', 'sockjs', function ($scope, sockjs) {
+            .register('sockIOCtrl', ['$scope', 'sockjsService', function ($scope, sockjs) {
                 var self = this;
 
                 self.setConnected = function (connected) {
@@ -49,43 +49,46 @@
 
         angular.module('myApp')
             .getProvider()
-            .service('sockjs', ['$rootScope', function ($rootScope) {
+            .service('sockjsService', ['$rootScope', function ($rootScope) {
 
+                var self = this;
                 var stompClient = null;
-
-                return {
-                    connect: function () {
-                        var socket = new SockJS('/hello');
-                        stompClient = Stomp.over(socket);
-                        stompClient.connect({}, function (frame) {
-                            $rootScope.$broadcast('sockio:connected', {
-                                isOpen: true
-                            })
-                            console.log('Connected: ' + frame);
-                            stompClient.subscribe('/topic/greetings', function (greeting) {
-
-                                $rootScope.$broadcast('sockio:msg', {
-                                    greeting: greeting
-                                })
-                            });
-                        });
-                    },
-
-                    disconnect: function () {
-                        if (stompClient != null) {
-                            stompClient.disconnect();
-                        }
+                self.connect = function () {
+                    var socket = new SockJS('/hello');
+                    stompClient = Stomp.over(socket);
+                    var headers = {
+                        login: 'mylogin',
+                        passcode: 'mypasscode'
+                    };
+                    stompClient.connect(headers, function (frame) {
                         $rootScope.$broadcast('sockio:connected', {
-                            isOpen: false
+                            isOpen: true
                         })
-                        console.log("Disconnected");
-                    },
+                        console.log('Connected: ' + frame);
+                        stompClient.subscribe('/topic/greetings', function (greeting) {
 
-                    sendName: function () {
-                        var name = document.getElementById('name').value;
-                        stompClient.send("/app/hello", {}, JSON.stringify({'name': name}));
+                            $rootScope.$broadcast('sockio:msg', {
+                                greeting: greeting
+                            })
+                        });
+                    });
+                },
+
+                self.disconnect = function () {
+                    if (stompClient != null) {
+                        stompClient.disconnect();
                     }
+                    $rootScope.$broadcast('sockio:connected', {
+                        isOpen: false
+                    })
+                    console.log("Disconnected");
+                },
+
+                self.sendName = function () {
+                    var name = document.getElementById('name').value;
+                    stompClient.send("/app/hello", {}, JSON.stringify({'name': name}));
                 }
+
             }])
     })
 })();

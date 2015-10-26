@@ -3,9 +3,8 @@
 define([
     'angular',
     'angularAnimate',
-    'angularUIBootstrap'
 ], function(angular) {
-	angular.module('myApp.view3.carousel', ['ui.router', 'ngAnimate', 'ui.bootstrap'])
+	angular.module('myApp.view3.carousel', ['ui.router', 'ngAnimate'])
 
     angular.module('myApp')
         .getControllerProvider()

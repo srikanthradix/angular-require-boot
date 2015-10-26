@@ -8,7 +8,7 @@
         'forms/empl/new/newEmplForm',
         'forms/empl/search/searchEmplForm'
     ], function (angular) {
-        var app = angular.module('myApp', ['ui.router', 'ui.bootstrap',
+        var app = angular.module('myApp', ['ui.router',
             'myApp.functions',
             'myApp.version',
             'myApp.view1.directivesAndTemplates',
