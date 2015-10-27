@@ -5,8 +5,57 @@
     'use strict';
 
     define([
-        'angular', 'angularResource', 'angularUtils'//, 'ngReactGrid'
+        'angular', 'angularResource', 'angularUtils', 'react'
     ], function (angular) {
+
+        var React = require('react');
+
+        var myEmpReactClass = React.createClass({
+            displayName: 'MyEmployeesList',
+            render: function () {
+                var employees = this.props.employees;
+
+                var styles = {
+                    table: {
+                        border: "1px solid #dfd7ca",
+                        color: '#3e3f3a',
+                        background: '#b3d4fc',
+                        'borderBottomWidth': '2px',
+                        'borderCollapse': 'collapse',
+                        'width': '90%'
+                    },
+                    td: {
+                        border: '1px solid #999',
+                        padding: '8px',
+                        'width': '18%'
+                    },
+                    tr: {
+                        ":nthChild(even)": "background:'#ECF0F1'"
+                    }
+                };
+
+                var rows = employees.map(function (emp) {
+                    var clickHandler = function (ev) {
+                        console.log('in ReactJS');
+                        console.log(ev);
+                    };
+
+                    return (
+                        React.DOM.tr({style: styles.tr},
+                            React.DOM.td({style: styles.td}, emp.id),
+                            React.DOM.td({style: styles.td}, emp.name),
+                            React.DOM.td({style: styles.td}, emp.salary),
+                            React.DOM.td({style: styles.td}, emp.department.name)
+                        )
+                    );
+                });
+
+                return (
+                    React.DOM.table({style: styles.table},
+                        React.DOM.tbody(null,rows))
+                );
+            }
+        });
 
         angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination'])
 
@@ -48,7 +97,10 @@
                         return self.emps; // `this` IS the `this` above!!
                     }), function (newVal, oldVal) {
                         // now we will pickup changes to newVal and oldVal
-                        if (newVal === oldVal) { console.log('first time'); return; } // AKA first run
+                        if (newVal === oldVal) {
+                            console.log('first time');
+                            return;
+                        } // AKA first run
                         console.log('self.emps updated');
                     }, true);
 
@@ -56,71 +108,34 @@
                 }])
 
             //angular.module('myApp')
-            //    .getProvider()
-            .service('empReactRenderer', ['React', function (React) {
-                var self = this;
-                self.render = function () {
-                    var employees = this.props.employees;
-
-                    var rows = employees.map(function (datum) {
-                        var clickHandler = function (ev) {
-                            console.log('in ReactJS');
-                            console.log(ev);
-                        };
-
-                        return (
-                            React.DOM.tr({onClick: clickHandler},
-                                React.DOM.td(null, datum[0]),
-                                React.DOM.td(null, datum[1]),
-                                React.DOM.td(null, datum[2]),
-                                React.DOM.td(null, datum[3])
-                            )
-                        );
-                    });
-
-                    return (
-                        React.DOM.table(null, rows)
-                    );
-                };
-
-                self.create = function () {
-                    return React.createClass({
-                        displayName: 'MyEmployeeReactList',
-                        render: self.render
-                    });
-                }
-            }])
-
-            //angular.module('myApp')
             //    .getCompileProvider()
-            .directive('displayWithReact', ['React', 'empReactRenderer', function (React, empReactRenderer) {
+            .directive('displayWithReact', function () {
                 var self = this || {};
 
                 self.link = function (scope, elem, attrs, reactCtrl) {
-                    scope.$watch(angular.bind(this, function () {
-                        //this is the "this" parent directive, not a child
-                        var employees = reactCtrl.employees;
+                    scope.$watchCollection(angular.bind(reactCtrl, function () {
+                        return reactCtrl.employees;
                     }), function (newVal, oldVal) {
-                        var myEmpReactRenderer = empReactRenderer.create();
-                        React.renderComponent(myEmpReactRenderer({employees: newVal}), elem[0]);
+                        if (newVal === oldVal) {
+                            return;
+                        } // AKA first run
+                        var element = React.createElement(myEmpReactClass, {employees: newVal});
+                        React.render(element, elem[0]);
                     })
                 }
 
                 return {
                     restrict: 'E',
-
                     scope: {},
-                    controllerAs: 'reactCtrl',
                     controller: function () {
-
                     },
+                    controllerAs: 'reactCtrl',
                     bindToController: {
                         employees: '='
                     },
-
                     link: self.link
                 }
-            }])
+            })
 
             // Inline edit directive
             .directive('editableField', function () {
@@ -139,7 +154,10 @@
                         scope.$watch(angular.bind(editCtrl, function () {
                             return editCtrl.model;
                         }), function (newVal, oldVal) {
-                            if (newVal === oldVal) { console.log('model first time'+newVal); return; }
+                            if (newVal === oldVal) {
+                                console.log('model first time' + newVal);
+                                return;
+                            }
                             console.log('model updated');
                         });
                         //editCtrl.someCtrlFn({value: editCtrl.model});

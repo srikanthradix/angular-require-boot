@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/react/react.js"></script>
+    <script src="../bower_components/react-dom/react-dom.js"></script>
+    <!--<script src="MyReactComponent.js"></script>-->
+    <script src="app.js"></script>
+</head>
+<body ng-app="fasterAngular">
+<h1>Faster Rendering With ReactJs</h1>
+
+<div ng-controller="mycontroller as myctrl">
+    <button ng-click="myctrl.refresh()">Refresh Data</button>
+    <react-display data="myctrl.data"></react-display>
+</div>
+</body>
+</body>
+</html>

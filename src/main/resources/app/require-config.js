@@ -13,6 +13,7 @@
             sockjs: 'bower_components/sockjs/sockjs',
             stomp: 'bower_components/stomp-websocket/lib/stomp',
             react: 'bower_components/react/react',
+            'react-dom': 'bower_components/react-dom/react-dom',
 
             //app scripts
             d3Ctrl: 'd3js/d3js',
@@ -40,6 +41,10 @@
             },
             'angularUtils': {
                 deps: ['angular']
+            },
+            'react-dom': {
+                deps: ['react'],
+                'exports': 'ReactDOM'
             }
         },
         priority: ["angular"]
@@ -55,7 +60,7 @@
             var $html = angular.element(document.getElementsByTagName('html')[0]);
             angular.element().ready(function () {
                 //bootstrap the app manually
-                angular.bootstrap(document, ['myApp']);
+                angular.bootstrap($html, ['myApp']);
             });
         }
     );
