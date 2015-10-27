@@ -12,8 +12,8 @@
             d3: 'bower_components/d3/d3',
             sockjs: 'bower_components/sockjs/sockjs',
             stomp: 'bower_components/stomp-websocket/lib/stomp',
-            react: 'bower_components/react/react',
-            'react-dom': 'bower_components/react-dom/react-dom',
+            react: 'bower_components/react/react-with-addons',
+            reactDom: 'bower_components/react-dom/react-dom',
 
             //app scripts
             d3Ctrl: 'd3js/d3js',
@@ -42,7 +42,7 @@
             'angularUtils': {
                 deps: ['angular']
             },
-            'react-dom': {
+            'reactDom': {
                 deps: ['react'],
                 'exports': 'ReactDOM'
             }

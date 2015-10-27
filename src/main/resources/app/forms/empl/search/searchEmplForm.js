@@ -5,43 +5,79 @@
     'use strict';
 
     define([
-        'angular', 'angularResource', 'angularUtils', 'react'
+        'angular', 'angularResource', 'angularUtils', 'react'//, 'reactDom'
     ], function (angular) {
 
         var React = require('react');
+        //var ReactDOM = require('reactDom');
+        var app = angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination'])
+
+        var REACT_EVENTS = {
+            "REACT_BROADCAST_MSG": "reactBroadcast:msg"
+        };
+
+        var MY_EVENTS = app.constant("MY_EVENTS", REACT_EVENTS);
+
+        //function $broadcast(event: string, ...args: any[]) {
+        //    angular.element('body').injector().invoke([
+        //        '$rootScope',
+        //        '$timeout',
+        //        ($rootScope: ng.IRootScopeService, $timeout: ng.ITimeoutService) =>
+        //    {
+        //        args.unshift(event);
+        //        $timeout(() => {
+        //            $rootScope.$broadcast.apply($rootScope, args);
+        //    });
+        //}
+        //]);
+    //}
 
         var myEmpReactClass = React.createClass({
-            displayName: 'MyEmployeesList',
+            displayName : 'MyEmployeesList',
+            //propTypes: {
+            //    // A custom object
+            //    employees: React.PropTypes.arrayOf({
+            //        id: React.PropTypes.string,
+            //        name: React.PropTypes.string,
+            //        salary: React.PropTypes.number,
+            //        deptName: React.PropTypes.string
+            //    })
+            //},
+            getDefaultProps: function() {
+                return {
+                    styles: {
+                        table: {
+                            border: "1px solid #dfd7ca",
+                            color: '#3e3f3a',
+                            background: '#b3d4fc',
+                            'borderBottomWidth': '2px',
+                            'borderCollapse': 'collapse',
+                            'width': '90%'
+                        },
+                        td: {
+                            border: '1px solid #999',
+                            padding: '8px',
+                            'width': '18%'
+                        }
+                    }
+                }
+            },
             render: function () {
                 var employees = this.props.employees;
+                var scope = this.props.scope;
+                var styles = this.props.styles;
 
-                var styles = {
-                    table: {
-                        border: "1px solid #dfd7ca",
-                        color: '#3e3f3a',
-                        background: '#b3d4fc',
-                        'borderBottomWidth': '2px',
-                        'borderCollapse': 'collapse',
-                        'width': '90%'
-                    },
-                    td: {
-                        border: '1px solid #999',
-                        padding: '8px',
-                        'width': '18%'
-                    },
-                    tr: {
-                        ":nthChild(even)": "background:'#ECF0F1'"
-                    }
-                };
+                var rows = employees.map(function (emp, idx) {
 
-                var rows = employees.map(function (emp) {
                     var clickHandler = function (ev) {
-                        console.log('in ReactJS');
-                        console.log(ev);
+                        console.log(ev.currentTarget);
+                        scope.$broadcast(REACT_EVENTS.REACT_BROADCAST_MSG, {
+                            msg: ev.currentTarget
+                        });
                     };
 
                     return (
-                        React.DOM.tr({style: styles.tr},
+                        React.DOM.tr({key: idx, onClick: clickHandler},
                             React.DOM.td({style: styles.td}, emp.id),
                             React.DOM.td({style: styles.td}, emp.name),
                             React.DOM.td({style: styles.td}, emp.salary),
@@ -57,13 +93,13 @@
             }
         });
 
-        angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination'])
+
 
             //angular.module('myApp')
             //    .getControllerProvider()
             //    .register
-            .controller('searchEmplCtrl', ['$scope', '$state', 'srchFormService',
-                function ($scope, $state, srchFormService) {
+        app.controller('searchEmplCtrl', ['$state', 'srchFormService', 'MY_EVENTS',
+                function ($state, srchFormService, MY_EVENTS) {
                     var self = this;
                     self.emps = [];
                     self.itemsPerPage = srchFormService.getItemsPerPage();
@@ -93,23 +129,12 @@
                     self.download = srchFormService.download;
                     self.reset = srchFormService.reset;
 
-                    $scope.$watch(angular.bind(self, function () {
-                        return self.emps; // `this` IS the `this` above!!
-                    }), function (newVal, oldVal) {
-                        // now we will pickup changes to newVal and oldVal
-                        if (newVal === oldVal) {
-                            console.log('first time');
-                            return;
-                        } // AKA first run
-                        console.log('self.emps updated');
-                    }, true);
-
                     self.reset();
                 }])
 
             //angular.module('myApp')
             //    .getCompileProvider()
-            .directive('displayWithReact', function () {
+        app.directive('displayWithReact', ['$rootScope', 'MY_EVENTS', function ($rootScope, MY_EVENTS) {
                 var self = this || {};
 
                 self.link = function (scope, elem, attrs, reactCtrl) {
@@ -119,9 +144,14 @@
                         if (newVal === oldVal) {
                             return;
                         } // AKA first run
-                        var element = React.createElement(myEmpReactClass, {employees: newVal});
+                        var element = React.createElement(myEmpReactClass, {employees: newVal, scope: scope});
                         React.render(element, elem[0]);
                     })
+
+                    scope.$on(MY_EVENTS.REACT_BROADCAST_MSG, function (event, reactEvent) {
+                        console.log('in Angular');
+                        console.log(reactEvent.msg);
+                    });
                 }
 
                 return {
@@ -135,10 +165,10 @@
                     },
                     link: self.link
                 }
-            })
+            }])
 
             // Inline edit directive
-            .directive('editableField', function () {
+        app.directive('editableField', function () {
                 var self = this || {};
                 self.link = function (scope, elm, attr, editCtrl) {
                     var previousValue;
@@ -190,7 +220,7 @@
 
             //angular.module('myApp')
             //    .getProvider()
-            .service('srchFormService', ['$q', 'deptService', function ($q, deptService) {
+        app.service('srchFormService', ['$q', 'deptService', function ($q, deptService) {
                 var self = this;
                 self.master = {};
                 self.itemsPerPage = 5;
