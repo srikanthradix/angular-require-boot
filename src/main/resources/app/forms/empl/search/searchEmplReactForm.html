@@ -16,9 +16,10 @@
         </button>
     </form>
     <br/> <br/>
-    <span class="my-span"> Displaying Number of Entries :  <input type="number" ng-model="srchC.itemsPerPage" max="100"
-                                                                  min="0"> </span>
-    <table id="searchResults" class="table table-bordered table-striped my-table">
+    <span class="my-span"> Displaying Number of Entries :
+        <input type="number" value="{{srchC.emps.length}}" max="100" min="0">
+    </span>
+    <table id="searchResults" class="table table-bordered table-striped my-table my-table-header-only">
         <thead>
         <tr>
             <td><input type="checkbox" ng-model="srchC.selectedAll" ng-click="srchC.selectAll()">
@@ -34,13 +35,13 @@
             </th>
             <td>Department</td>
             </th>
-
         </tr>
         </thead>
         </table>
         <display-with-react employees="srchC.emps"></display-with-react>
     <br/>
     <button type="button" ng-click="srchC.navigate('main.view2a')" class="btn btn-info float-left">Add Employee</button>
+    <button type="button" ng-click="srchC.removeEmployee()" class="btn btn-info float-center">Delete Employee</button>
 
 </div>
 <br/>

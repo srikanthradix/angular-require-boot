@@ -139,6 +139,11 @@ tr:nth-child(even) {
   content: '\25bc';
 }
 
+.my-table-header-only {
+    border-bottom : 0px !important;
+    margin-bottom: 0px !important;
+}
+
 .my-table {
     width: 90% !important;
 }
