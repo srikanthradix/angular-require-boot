@@ -123,7 +123,7 @@
                                     React.DOM.tr({key: idx},
                                         React.DOM.td({style: styles.td}, React.DOM.input({
                                             type: 'checkbox',
-                                            checked: self.selected,
+                                            checked: emp.selected,
                                             onChange: self.selectHandler.bind(self, ctrl, emp)
                                         })),
                                         React.DOM.td({style: styles.td}, emp.id),
