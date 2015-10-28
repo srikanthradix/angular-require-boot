@@ -208,5 +208,5 @@ tr:nth-child(even) {
     background: #b3d4fc;
     border-bottom-width: 2px;
     border-collapse: collapse;
-    width: 70%;
+    width: 100%;
 }

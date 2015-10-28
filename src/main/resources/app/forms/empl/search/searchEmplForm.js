@@ -21,6 +21,20 @@
         //var ReactDOM = require('reactDom');
         angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination'])
 
+            .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+                $stateProvider
+                    .state('main.view2b.search', {
+                        url: '/searchForm',
+                        templateUrl: 'forms/empl/search/searchEmplReactForm.html'
+                    })
+                    .state('main.view2b.update', {
+                        url: '/updateForm',
+                        templateUrl: 'forms/empl/update/updateEmplForm.html'
+                    });
+
+                $urlRouterProvider.otherwise('/main/view2b');
+            }])
+
             .factory('reactEmpTableRendererFactory', function () {
                 var self = {};
                 self.create = function () {
@@ -159,23 +173,21 @@
                 function ($state, srchFormService) {
                     var self = this;
                     self.emps = [];
-                    self.itemsPerPage = srchFormService.getItemsPerPage();
+                    self.selectedEmp = {};
+
+                    self.setSelectedEmployee = function () {
+                        self.selectedEmp = srchFormService.getSelectedEmployee();
+                        console.log(self.selectedEmp);
+                    }
+                    //self.itemsPerPage = srchFormService.getItemsPerPage();
 
                     self.search = function (dept) {
                         self.emps = srchFormService.search(dept);
                     }
-
-                    self.navigate = function (route) {
-                        $state.go(route);
-                    }
+                    self.updateEmployee = srchFormService.updateEmployee;
                     self.removeEmployee = function () {
                         self.emps = srchFormService.removeEmployee();
                     }
-                    self.setItemsPerPage = function (itemsPerPage) {
-                        srchFormService.setItemsPerPage(itemsPerPage);
-                        self.itemsPerPage = itemsPerPage;
-                    }
-                    self.selectAll = srchFormService.selectAll;
                     self.download = srchFormService.download;
                     self.reset = srchFormService.reset;
 
@@ -284,6 +296,14 @@
                     self.itemsPerPage = itemsPerPage;
                 }
 
+                self.getSelectedEmployee = function () {
+                    angular.forEach(self.emps, function(emp) {
+                        if (emp.selected === true) {
+                            return emp;
+                        }
+                    })
+                }
+
                 self.getItemsPerPage = function () {
                     return self.itemsPerPage;
                 }
@@ -304,13 +324,12 @@
                     return self.emps;
                 }
 
-                self.updateEmployee = function (emp) {
-                    var index = self.emps.indexOf(emp);
-                    console.log('index:' + index);
-                    if (~index) {
-                        self.emps[index] = emp;
-                    }
-                    return self.emps;
+                self.updateEmployee = function () {
+                    angular.forEach(self.emps, function(emp) {
+                        if (emp.selected === true) {
+                            console.log('emp to be updated...')
+                        }
+                    })
                 }
 
                 self.removeEmployee = function () {
@@ -328,12 +347,6 @@
                 //    self.reverse = (self.predicate === predicate) ? !self.reverse : false;
                 //    self.predicate = predicate;
                 //}
-
-                self.selectAll = function () {
-                    angular.forEach(self.emps, function (emp) {
-                        emp.selected = true;
-                    });
-                }
 
                 self.download = function () {
                     var data = ["EMP_ID, EMP_NAME, EMP_SALARY, EMP_DEPT" + '\r\n'];

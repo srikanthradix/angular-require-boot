@@ -114,8 +114,8 @@
                         //}
                     })
                     .state('main.view2b', {
-                        url: '/view2b',
-                        templateUrl: 'forms/empl/search/searchEmplReactForm.html',
+                        url: '/view2b/search',
+                        templateUrl: 'forms/empl/search/searchAndUpdateEmplForm.html',
                         controllerAs: 'srchC',
                         controller: 'searchEmplCtrl'
                         //resolve: {
