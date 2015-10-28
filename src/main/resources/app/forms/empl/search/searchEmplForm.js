@@ -83,29 +83,8 @@
                         //    })
                         //},
                         getDefaultProps: function () {
-                            var table = {
-                                border: "1px solid #dfd7ca",
-                                color: '#3e3f3a',
-                                background: '#b3d4fc',
-                                'borderBottomWidth': '2px',
-                                'borderCollapse': 'collapse',
-                                'width': '90%'
-                            };
-                            var td = {
-                                border: '1px solid #999',
-                                padding: '8px',
-                                width: '18%',
-                                textAlign: 'center',
-                                verticalAlign: 'middle'
-                            };
-                            var th = td;
                             var cols = ['Id', 'Name', 'Salary', 'Department'];
                             return {
-                                styles: {
-                                    table: table,
-                                    td: td,
-                                    th: th
-                                },
                                 table: {
                                     cols: cols
                                 }
@@ -114,29 +93,30 @@
                         render: function () {
                             var self = this;
                             var ctrl = self.props.ctrl;
-                            var styles = self.props.styles;
                             var cols = self.props.table.cols;
 
                             var rows = ctrl.employees.map(function (emp, idx) {
 
                                 return (
-                                    React.DOM.tr({key: idx},
-                                        React.DOM.td({style: styles.td}, React.DOM.input({
+                                    React.DOM.tr({
+                                            key: idx
+                                        },
+                                        React.DOM.td({}, React.DOM.input({
                                             type: 'checkbox',
                                             checked: emp.selected,
                                             onChange: self.selectHandler.bind(self, ctrl, emp)
                                         })),
-                                        React.DOM.td({style: styles.td}, emp.id),
-                                        React.DOM.td({style: styles.td}, emp.name),
-                                        React.DOM.td({style: styles.td}, emp.salary),
-                                        React.DOM.td({style: styles.td}, emp.department.name)
+                                        React.DOM.td({}, emp.id),
+                                        React.DOM.td({}, emp.name),
+                                        React.DOM.td({}, emp.salary),
+                                        React.DOM.td({}, emp.department.name)
                                     )
                                 );
                             });
 
                             var thead = React.DOM.thead({},
                                 React.DOM.tr({},
-                                    React.DOM.td({style: styles.th}, React.DOM.input({
+                                    React.DOM.td({}, React.DOM.input({
                                         type: 'checkbox',
                                         checked: self.selected,
                                         onChange: self.selectAllHandler.bind(self, ctrl.employees)
@@ -144,26 +124,24 @@
                                     //cols.map(function (col, idx) {
                                     //    return React.DOM.th(
                                     //        {
-                                    //            key: idx,
-                                    //            style: styles.th
+                                    //            key: idx
                                     //        },
                                     //        col
                                     //    );
                                     //})));
-                                    React.DOM.td({style: styles.td}, cols[0]),
-                                    React.DOM.td({style: styles.td}, cols[1]),
+                                    React.DOM.td({}, cols[0]),
+                                    React.DOM.td({}, cols[1]),
                                     React.DOM.td({
-                                        style: styles.td,
                                         onClick : self.sort.bind(self, ctrl.employees, cols[2])
                                     }, cols[2]),
-                                    React.DOM.td({style: styles.td}, cols[3])
+                                    React.DOM.td({}, cols[3])
                                 ));
 
                             var tbody = React.DOM.tbody({}, rows);
 
                             return (
                                 React.DOM.table(
-                                    {style: styles.table},
+                                    {},
                                     //tbody
                                     [thead, tbody]
                                 )
@@ -182,8 +160,6 @@
                     var self = this;
                     self.emps = [];
                     self.itemsPerPage = srchFormService.getItemsPerPage();
-                    self.predicate = srchFormService.getPredicate();
-                    self.reverse = srchFormService.getReverse();
 
                     self.search = function (dept) {
                         self.emps = srchFormService.search(dept);
@@ -194,11 +170,6 @@
                     }
                     self.removeEmployee = function () {
                         self.emps = srchFormService.removeEmployee();
-                    }
-                    self.order = function (predicate) {
-                        srchFormService.order(predicate);
-                        self.predicate = srchFormService.getPredicate();
-                        self.reverse = srchFormService.getReverse();
                     }
                     self.setItemsPerPage = function (itemsPerPage) {
                         srchFormService.setItemsPerPage(itemsPerPage);
@@ -307,8 +278,6 @@
                 var self = this;
                 self.master = {};
                 self.itemsPerPage = 5;
-                self.predicate = 'salary';
-                self.reverse = true;
                 self.emps = []
 
                 self.setItemsPerPage = function (itemsPerPage) {
@@ -317,14 +286,6 @@
 
                 self.getItemsPerPage = function () {
                     return self.itemsPerPage;
-                }
-
-                self.getPredicate = function () {
-                    return self.predicate;
-                }
-
-                self.getReverse = function () {
-                    return self.reverse;
                 }
 
                 self.search = function (dept) {
@@ -363,10 +324,10 @@
                     return self.emps;
                 }
 
-                self.order = function (predicate) {
-                    self.reverse = (self.predicate === predicate) ? !self.reverse : false;
-                    self.predicate = predicate;
-                }
+                //self.order = function (predicate) {
+                //    self.reverse = (self.predicate === predicate) ? !self.reverse : false;
+                //    self.predicate = predicate;
+                //}
 
                 self.selectAll = function () {
                     angular.forEach(self.emps, function (emp) {

@@ -1,11 +1,11 @@
 /* app css stylesheet */
 
 /*.menu:before {*/
-  /*content: "[";*/
+  /*content: [;*/
 /*}*/
 
 /*.menu:after {*/
-  /*content: "]";*/
+  /*content: ];*/
 /*}*/
 .float-right {
 	float: right;
@@ -65,12 +65,12 @@ tr:nth-child(even) {
 }
 
 /*.menu > li:before {*/
-  /*content: "|";*/
+  /*content: |;*/
   /*padding-right: 0.3em;*/
 /*}*/
 
 /*.menu > li:nth-child(1):before {*/
-  /*content: "";*/
+  /*content: ;*/
   /*padding: 2px;*/
 /*}*/
 
@@ -180,4 +180,33 @@ tr:nth-child(even) {
 
 .my-carousel {
     height: 350px;
+}
+
+#table-wrapper {
+    position:relative;
+}
+#table-scroll {
+    height: 350px;
+    overflow:auto;
+    margin-top:20px;
+}
+
+#table-wrapper td {
+    border: 1px solid #999;
+    padding : 8px;
+    text-align : center;
+    vertical-align : middle;
+}
+
+#table-wrapper th {
+    background: lightsteelblue;
+}
+
+#table-wrapper table {
+    border: 1px solid #dfd7ca;
+    color: #3e3f3a;
+    background: #b3d4fc;
+    border-bottom-width: 2px;
+    border-collapse: collapse;
+    width: 70%;
 }
