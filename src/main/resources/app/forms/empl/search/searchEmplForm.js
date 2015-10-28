@@ -10,6 +10,14 @@
 
         var React = require('react');
 
+        //var sorter = function sortBy(arr, prop) {
+        //    return arr.slice(0).sort(function(a, b) {
+        //        if (a[prop] < b[prop]) return -1;
+        //        if (a[prop] > b[prop]) return 1;
+        //        return 0;
+        //    });
+        //}
+
         //var ReactDOM = require('reactDom');
         angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination'])
 
@@ -18,6 +26,53 @@
                 self.create = function () {
                     return React.createClass({
                         displayName: 'MyEmployeesList',
+                        sortBy : function (arr, prop) {
+                            arr.sort(function(a, b) {
+                                return parseFloat(a.salary) - parseFloat(b.salary);
+                            })
+                        },
+                        sortByInverse : function (arr, prop) {
+                            arr.sort(function(a, b) {
+                                return parseFloat(b.salary) - parseFloat(a.salary);
+                            })
+                        },
+                        //sort_by : function(primer, prop, reverse){
+                        //    var key = function (x) {return primer ? primer(x[prop]) : x[prop]};
+                        //
+                        //    return function (a,b) {
+                        //        var A = key(a), B = key(b);
+                        //        return ( (A < B) ? -1 : ((A > B) ? 1 : 0) ) * [-1,1][+!!reverse];
+                        //    }
+                        //},
+                        getInitialState: function() {
+                            return {
+                                inverse: true,
+                                selected: false
+                            };
+                        },
+
+                        sort: function(employees, prop) {
+                            var inverse = !this.state.inverse;
+                            this.setState({inverse: inverse});
+                            if(inverse === true) {
+                                this.sortBy(employees, prop);
+                            } else {
+                                this.sortByInverse(employees, prop);
+                            }
+                        },
+                        selectAllHandler : function (employees) {
+                            var selected = !this.state.selected;
+                            this.setState({selected : selected});
+                            employees.map(function (emp, idx) {
+                                emp.selected = selected;
+                            });
+                            //ctrl.clickHandler.call(ctrl, emp)
+                        },
+                        selectHandler : function (ctrl, emp) {
+                            emp.selected = !this.state.selected;
+                            this.setState({selected : emp.selected});
+                            //ctrl.clickHandler.call(ctrl, emp)
+                        },
                         //propTypes: {
                         //    // A custom object
                         //    employees: React.PropTypes.arrayOf({
@@ -43,11 +98,13 @@
                                 textAlign: 'center',
                                 verticalAlign: 'middle'
                             };
+                            var th = td;
                             var cols = ['Id', 'Name', 'Salary', 'Department'];
                             return {
                                 styles: {
                                     table: table,
-                                    td: td
+                                    td: td,
+                                    th: th
                                 },
                                 table: {
                                     cols: cols
@@ -56,25 +113,18 @@
                         },
                         render: function () {
                             var self = this;
-                            var employees = self.props.employees;
-                            var scope = self.props.scope;
+                            var ctrl = self.props.ctrl;
                             var styles = self.props.styles;
                             var cols = self.props.table.cols;
 
-                            var rows = employees.map(function (emp, idx) {
-
-                                var clickHandler = function (selected, self) {
-                                    emp.selected = selected;
-                                    this.setState({});
-                                    scope.clickHandler.call(scope, emp)
-                                }
+                            var rows = ctrl.employees.map(function (emp, idx) {
 
                                 return (
                                     React.DOM.tr({key: idx},
                                         React.DOM.td({style: styles.td}, React.DOM.input({
                                             type: 'checkbox',
-                                            checked: emp.selected,
-                                            onChange: clickHandler.bind(self, !emp.selected)
+                                            checked: self.selected,
+                                            onChange: self.selectHandler.bind(self, ctrl, emp)
                                         })),
                                         React.DOM.td({style: styles.td}, emp.id),
                                         React.DOM.td({style: styles.td}, emp.name),
@@ -84,18 +134,38 @@
                                 );
                             });
 
-                            //var thead = React.DOM.thead({},
-                            //    React.DOM.tr({},
-                            //        cols.map(function (col, idx) {
-                            //            return React.DOM.th({key: idx}, col);
-                            //        })));
+                            var thead = React.DOM.thead({},
+                                React.DOM.tr({},
+                                    React.DOM.td({style: styles.th}, React.DOM.input({
+                                        type: 'checkbox',
+                                        checked: self.selected,
+                                        onChange: self.selectAllHandler.bind(self, ctrl.employees)
+                                    })),
+                                    //cols.map(function (col, idx) {
+                                    //    return React.DOM.th(
+                                    //        {
+                                    //            key: idx,
+                                    //            style: styles.th
+                                    //        },
+                                    //        col
+                                    //    );
+                                    //})));
+                                    React.DOM.td({style: styles.td}, cols[0]),
+                                    React.DOM.td({style: styles.td}, cols[1]),
+                                    React.DOM.td({
+                                        style: styles.td,
+                                        onClick : self.sort.bind(self, ctrl.employees, cols[2])
+                                    }, cols[2]),
+                                    React.DOM.td({style: styles.td}, cols[3])
+                                ));
 
                             var tbody = React.DOM.tbody({}, rows);
 
                             return (
                                 React.DOM.table(
-                                    {style: styles.table}, tbody
-                                    //[thead, tbody]
+                                    {style: styles.table},
+                                    //tbody
+                                    [thead, tbody]
                                 )
                             );
                         }
@@ -156,14 +226,14 @@
                             } // AKA first run
                             var element = React.createElement(
                                 reactEmpTableRendererFactory.create(),
-                                {employees: newVal, scope: scope}
+                                {ctrl: reactCtrl}
                             );
                             React.render(element, elem[0]);
                         })
 
-                        scope.clickHandler = function (emp) {
-                            //console.log('in angular');
-                            //console.log(emp);
+                        reactCtrl.clickHandler = function (emp) {
+                            console.log('in angular');
+                            console.log(emp.selected);
                         }
                     }
 

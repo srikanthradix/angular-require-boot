@@ -19,25 +19,25 @@
     <span class="my-span"> Displaying Number of Entries :
         <input type="number" value="{{srchC.emps.length}}" max="100" min="0">
     </span>
-    <table id="searchResults" class="table table-bordered table-striped my-table my-table-header-only">
-        <thead>
-        <tr>
-            <td><input type="checkbox" ng-click="srchC.selectAll()">
-            </th>
-            <td>Id
-            </th>
-            <td>Name
-            </th>
-            <td><a href="" ng-click="srchC.order('salary')">Salary</a>
-                <span class="sortorder" ng-show="srchC.predicate === 'salary'"
-                      ng-class="{reverse:srchC.reverse}"></span>
-            </th>
-            </th>
-            <td>Department</td>
-            </th>
-        </tr>
-        </thead>
-        </table>
+    <!--<table id="searchResults" class="table table-bordered table-striped my-table my-table-header-only">-->
+        <!--<thead>-->
+        <!--<tr>-->
+            <!--<td><input type="checkbox" ng-click="srchC.selectAll()">-->
+            <!--</th>-->
+            <!--<td>Id-->
+            <!--</th>-->
+            <!--<td>Name-->
+            <!--</th>-->
+            <!--<td><a href="" ng-click="srchC.order('salary')">Salary</a>-->
+                <!--<span class="sortorder" ng-show="srchC.predicate === 'salary'"-->
+                      <!--ng-class="{reverse:srchC.reverse}"></span>-->
+            <!--</th>-->
+            <!--</th>-->
+            <!--<td>Department</td>-->
+            <!--</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--</table>-->
         <display-with-react employees="srchC.emps"></display-with-react>
     <br/>
     <button type="button" ng-click="srchC.navigate('main.view2a')" class="btn btn-info float-left">Add Employee</button>
