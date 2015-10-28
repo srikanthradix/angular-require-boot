@@ -283,11 +283,13 @@
                 }
 
                 self.removeEmployee = function () {
-                    angular.forEach(self.emps, function(emp, idx) {
-                        if(emp.selected === true) {
-                            self.emps.splice(idx, 1);
+                    var activeEmps = [];
+                    angular.forEach(self.emps, function(emp) {
+                        if(emp.selected === false) {
+                            activeEmps.push(emp);
                         }
                     })
+                    self.emps = activeEmps;
                     return self.emps;
                 }
 
@@ -297,16 +299,8 @@
                 }
 
                 self.selectAll = function () {
-                    self.emps = self.emps || {};
-
-                    if (self.selectedAll) {
-                        self.selectedAll = true;
-                    } else {
-                        self.selectedAll = false;
-                    }
-
                     angular.forEach(self.emps, function (emp) {
-                        emp.selected = self.selectedAll;
+                        emp.selected = true;
                     });
                 }
 
