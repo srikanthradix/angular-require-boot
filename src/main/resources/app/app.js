@@ -23,8 +23,8 @@
                 {
                     route: '', title: "Forms", active: false,
                     dropdown: [
-                        {route: 'main.view2a', title: "NewForm", active: false},
-                        {route: 'main.view2b', title: "SearchForm", active: false},
+                        {route: 'main.view2a.id', title: "NewForm", active: false},
+                        {route: 'main.view2b.search', title: "SearchForm", active: false},
                     ]
                 },
                 {route: 'main.view3', title: "Carousel", active: false},

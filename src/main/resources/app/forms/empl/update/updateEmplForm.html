@@ -9,9 +9,10 @@
 <div>
     <form name="updateForm">
         <div class="form-group">
-            <label for="name">Employee Name</label> <input type="text"
-                                                           ng-model="srch.selectedEmp.name" name="name" required=""
-                                                           ng-model-options="{updateOn : 'blur'}"/>
+            <label for="name">Employee Name</label>
+            <input type="text"
+                   ng-model="srchC.selectedEmp.name" name="name" required=""
+                   ng-model-options="{updateOn : 'blur'}"/>
 
             <div ng-show="updateForm.$submitted || updateForm.name.$touched">
                 <span ng-show="updateForm.name.$error.required">Enter employee name</span>
@@ -19,9 +20,10 @@
         </div>
 
         <div class="form-group">
-            <label for="sal">Employee Salary</label> <input type="number"
-                                                            ng-model="srch.selectedEmp.salary" name="sal" required=""
-                                                            ng-model-options="{updateOn : 'blur'}"/>
+            <label for="sal">Employee Salary</label>
+            <input type="number"
+                   ng-model="srchC.selectedEmp.salary" name="sal" required=""
+                   ng-model-options="{updateOn : 'blur'}"/>
 
             <div ng-show="updateForm.$submitted || updateForm.sal.$touched">
 				<span ng-show="updateForm.sal.$error.required">Enter employee
@@ -30,9 +32,10 @@
         </div>
 
         <div class="form-group">
-            <label for="dept">Department</label> <input type="text"
-                                                        ng-model="srch.selectedEmp.dept" name="dept" required=""
-                                                        ng-model-options="{updateOn : 'blur'}"/>
+            <label for="dept">Department</label>
+            <input type="text"
+                   ng-model="srchC.selectedEmp.department.name" name="dept" required=""
+                   ng-model-options="{updateOn : 'blur'}"/>
 
             <div ng-show="updateForm.$submitted || updateForm.dept.$touched">
 				<span ng-show="updateForm.dept.$error.required">Enter employee
@@ -41,7 +44,9 @@
         </div>
     </form>
     <br/>
-    <button type="button" ng-click="srchC.updateEmployee()" ng-disabled="updateForm.$invalid" class="btn btn-info float-left">Update Employee</button>
+    <button type="button" ng-click="srchC.updateEmployee()" ng-disabled="updateForm.$invalid" class="btn btn-info float-left">
+        Update Employee
+    </button>
 </div>
 <br/>
 </body>

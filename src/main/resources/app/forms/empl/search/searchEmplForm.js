@@ -10,14 +10,6 @@
 
         var React = require('react');
 
-        //var sorter = function sortBy(arr, prop) {
-        //    return arr.slice(0).sort(function(a, b) {
-        //        if (a[prop] < b[prop]) return -1;
-        //        if (a[prop] > b[prop]) return 1;
-        //        return 0;
-        //    });
-        //}
-
         //var ReactDOM = require('reactDom');
         angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination'])
 
@@ -174,24 +166,25 @@
                     var self = this;
                     self.emps = [];
                     self.selectedEmp = {};
+                    self.view2b = self.view2b || {};
 
                     self.setSelectedEmployee = function () {
-                        self.selectedEmp = srchFormService.getSelectedEmployee();
-                        console.log(self.selectedEmp);
+                        self.selectedEmp = srchFormService.setSelectedEmployee();
                     }
-                    //self.itemsPerPage = srchFormService.getItemsPerPage();
 
                     self.search = function (dept) {
                         self.emps = srchFormService.search(dept);
                     }
-                    self.updateEmployee = srchFormService.updateEmployee;
+                    self.updateEmployee = function () {
+                        self.emps = srchFormService.updateEmployee();
+                    }
                     self.removeEmployee = function () {
                         self.emps = srchFormService.removeEmployee();
                     }
                     self.download = srchFormService.download;
                     self.reset = srchFormService.reset;
 
-                    self.reset();
+                    //self.reset();
                 }])
 
             //angular.module('myApp')
@@ -281,27 +274,34 @@
             //angular.module('myApp')
             //    .getProvider()
             .service('deptService', ['$resource', function ($resource) {
-                return $resource('/dept/:dept', {dept: '@_dept'});
+                return $resource('/dept/:dept', {dept: '@_dept'}, {
+                    update: {
+                        method: 'POST' // this method issues a PUT request
+                    }
+                });
             }])
 
             //angular.module('myApp')
             //    .getProvider()
-            .service('srchFormService', ['$q', 'deptService', function ($q, deptService) {
+            .service('srchFormService', ['$state', 'deptService', function ($state, deptService) {
                 var self = this;
                 self.master = {};
                 self.itemsPerPage = 5;
                 self.emps = []
+                self.selectedEmp = {};
+                self.view2b = self.view2b || {};
 
                 self.setItemsPerPage = function (itemsPerPage) {
                     self.itemsPerPage = itemsPerPage;
                 }
 
-                self.getSelectedEmployee = function () {
+                self.setSelectedEmployee = function () {
                     angular.forEach(self.emps, function(emp) {
                         if (emp.selected === true) {
-                            return emp;
+                            self.selectedEmp = emp;
                         }
                     })
+                    return self.selectedEmp;
                 }
 
                 self.getItemsPerPage = function () {
@@ -325,11 +325,18 @@
                 }
 
                 self.updateEmployee = function () {
-                    angular.forEach(self.emps, function(emp) {
-                        if (emp.selected === true) {
-                            console.log('emp to be updated...')
-                        }
-                    })
+                    deptService.update({dept: self.selectedEmp})
+                        .$promise
+                        .then(function (data) {
+                            self.view2b.message = 'Employee updated: ' + data.id
+                        }, function (error) {
+                            console.log(error);
+                            self.view2b.message = 'There is an error updating employee. Please contact customer support.';
+                        })
+                        .finally(function () {
+                            self.reset();
+                            $state.go('main.view2b');
+                        });
                 }
 
                 self.removeEmployee = function () {
@@ -366,7 +373,8 @@
                 };
 
                 self.reset = function () {
-                    self.emp = angular.copy(self.master);
+                    self.emps = [];
+                    self.selectedEmp = {};
                 };
 
             }]);

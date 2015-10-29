@@ -18,7 +18,7 @@
                         templateUrl: 'forms/empl/new/profileForm.html'
                     });
 
-                $urlRouterProvider.otherwise('/main/view2a');
+                $urlRouterProvider.otherwise('/main/view2a/idForm');
             }])
 
             .controller('NewEmplCtrl', ['$state', 'empService', function ($state, empService) {

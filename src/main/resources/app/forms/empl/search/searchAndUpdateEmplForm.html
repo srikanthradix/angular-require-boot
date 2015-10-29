@@ -14,18 +14,15 @@
                 <h2>Search Employee Form</h2>
 
                 <div id="status-buttons">
-                    <a ui-sref-active="{active: $state.includes('search')}" ui-sref=".search">Search</a>
-                    <a ui-sref-active="{active: $state.includes('search')}" ui-sref=".update">Update</a>
+                    <a ui-sref=".search">Search</a>
+                    <a ui-sref=".update">Update</a>
                 </div>
             </div>
 
             <!-- SHOW ERROR/SUCCESS MESSAGES -->
-            <div id="messages">{{ view2a.message }}</div>
+            <div id="messages">{{ view2b.message }}</div>
 
-            <div>
-                Search: {{$state.includes('search')}}
-            </div>
-
+            <br/>
             <!--<form name="form" id="signup-form" novalidate class="form-css" ng-submit="nefC.save(emp)">-->
                 <div ui-view></div>
             <!--</form>-->
