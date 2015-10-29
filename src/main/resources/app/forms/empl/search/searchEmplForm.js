@@ -228,6 +228,11 @@
                             console.log('in angular');
                             console.log(emp.selected);
                         }
+
+                        //clean up React component
+                        scope.$on('$destroy', function () {
+                            React.unmountComponentAtNode(elem[0]);
+                        })
                     }
 
                     return {

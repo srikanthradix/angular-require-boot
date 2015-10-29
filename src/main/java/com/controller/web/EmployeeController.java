@@ -51,7 +51,7 @@ public class EmployeeController {
 	
 	static {
 		List<Employee> emps = new ArrayList<>();
-		IntStream.range(0, 30)
+		IntStream.range(0, 300)
 			.forEach( i -> {
 				Employee emp = new Employee();
 				Department dept = new Department();
