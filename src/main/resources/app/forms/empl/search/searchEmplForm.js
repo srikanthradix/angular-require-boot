@@ -17,6 +17,10 @@
                 $stateProvider
                     .state('main.view2b.search', {
                         url: '/searchForm',
+                        templateUrl: 'forms/empl/search/searchEmplForm.html'
+                    })
+                    .state('main.view2b.rsearch', {
+                        url: '/searchRForm',
                         templateUrl: 'forms/empl/search/searchEmplReactForm.html'
                     })
                     .state('main.view2b.update', {
@@ -53,7 +57,8 @@
                         getInitialState: function() {
                             return {
                                 inverse: true,
-                                selected: false
+                                selected: false,
+                                selectAll: false
                             };
                         },
 
@@ -67,15 +72,15 @@
                             }
                         },
                         selectAllHandler : function (employees) {
-                            var selected = !this.state.selected;
-                            this.setState({selected : selected});
+                            var selectAll = !this.state.selectAll;
+                            this.setState({selectAll : selectAll});
                             employees.map(function (emp, idx) {
-                                emp.selected = selected;
+                                emp.selected = selectAll;
                             });
                             //ctrl.clickHandler.call(ctrl, emp)
                         },
                         selectHandler : function (ctrl, emp) {
-                            emp.selected = !this.state.selected;
+                            emp.selected = !emp.selected;
                             this.setState({selected : emp.selected});
                             //ctrl.clickHandler.call(ctrl, emp)
                         },
@@ -124,7 +129,7 @@
                                 React.DOM.tr({},
                                     React.DOM.td({}, React.DOM.input({
                                         type: 'checkbox',
-                                        checked: self.selected,
+                                        checked: self.selectAll,
                                         onChange: self.selectAllHandler.bind(self, ctrl.employees)
                                     })),
                                     //cols.map(function (col, idx) {
@@ -167,11 +172,23 @@
                     self.emps = [];
                     self.selectedEmp = {};
                     self.view2b = self.view2b || {};
+                    self.itemsPerPage = srchFormService.getItemsPerPage();
+                    self.predicate = srchFormService.getPredicate();
+                    self.reverse = srchFormService.getReverse();
 
                     self.setSelectedEmployee = function () {
                         self.selectedEmp = srchFormService.setSelectedEmployee();
                     }
 
+                    self.order = function (predicate) {
+                        srchFormService.order(predicate);
+                        self.predicate = srchFormService.getPredicate();
+                        self.reverse = srchFormService.getReverse();
+                    }
+                    self.setItemsPerPage = function (itemsPerPage) {
+                        srchFormService.setItemsPerPage(itemsPerPage);
+                        self.itemsPerPage = itemsPerPage;
+                    }
                     self.search = function (dept) {
                         self.emps = srchFormService.search(dept);
                     }
@@ -290,6 +307,8 @@
                 self.emps = []
                 self.selectedEmp = {};
                 self.view2b = self.view2b || {};
+                self.predicate = 'salary';
+                self.reverse = true;
 
                 self.setItemsPerPage = function (itemsPerPage) {
                     self.itemsPerPage = itemsPerPage;
@@ -306,6 +325,12 @@
 
                 self.getItemsPerPage = function () {
                     return self.itemsPerPage;
+                }
+                self.getPredicate = function () {
+                    return self.predicate;
+                }
+                self.getReverse = function () {
+                    return self.reverse;
                 }
 
                 self.search = function (dept) {
@@ -350,10 +375,10 @@
                     return self.emps;
                 }
 
-                //self.order = function (predicate) {
-                //    self.reverse = (self.predicate === predicate) ? !self.reverse : false;
-                //    self.predicate = predicate;
-                //}
+                self.order = function (predicate) {
+                    self.reverse = (self.predicate === predicate) ? !self.reverse : false;
+                    self.predicate = predicate;
+                }
 
                 self.download = function () {
                     var data = ["EMP_ID, EMP_NAME, EMP_SALARY, EMP_DEPT" + '\r\n'];
