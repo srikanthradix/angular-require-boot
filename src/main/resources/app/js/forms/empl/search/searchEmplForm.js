@@ -289,7 +289,7 @@
                     },
                     transclude: true,
                     link: self.link,
-                    templateUrl: '../../../templates/inline-edit.html'
+                    templateUrl: '../../html/templates/inline-edit.html'
                 };
             })
 

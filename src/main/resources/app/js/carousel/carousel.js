@@ -3,8 +3,9 @@
 define([
     'angular',
     'angularAnimate',
+    'angularUIBootstrap'
 ], function(angular) {
-	angular.module('myApp.view3.carousel', ['ui.router', 'ngAnimate'])
+	angular.module('myApp.view3.carousel', ['ui.router', 'ui.bootstrap', 'ngAnimate'])
 
     angular.module('myApp')
         .getControllerProvider()
@@ -29,6 +30,33 @@ define([
             self.addSlide();
         }
     }])
+
+    angular.module('myApp')
+        .getCompileProvider()
+        .directive('myCarousel', ['$compile',function($compile){
+        function link(scope, element, attrs, crslC) {
+            scope.$watch(angular.bind(crslC, function () {
+                return crslC.slides;
+            }), function (newVal, oldVal) {
+                if (newVal === oldVal) {
+                    return;
+                }
+            }, true);
+        }
+        return {
+            link: link,
+            restrict: 'E',
+            scope: {},
+            controller: function () {},
+            controllerAs: 'crslC',
+            bindToController: {
+                slides : '=',
+                myInterval : '=',
+                noWrapSlides : '='
+            },
+            templateUrl : '../../html/templates/carousel-tpl.html'
+        };
+    }]);
 
     angular.module('myApp')
         .getControllerProvider()

@@ -4,15 +4,16 @@
     require.config({
         baseUrl: '../',
         paths: {
-            angular: 'vendor/angular/angular',
-            angularResource: 'vendor/angular-resource/angular-resource',
-            angularAnimate: 'vendor/angular-animate/angular-animate',
-            angularUIRouter: 'vendor/angular-ui-router/release/angular-ui-router',
+            angular: 'vendor/angular/angular.min',
+            angularResource: 'vendor/angular-resource/angular-resource.min',
+            angularAnimate: 'vendor/angular-animate/angular-animate.min',
+            angularUIBootstrap: 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
+            angularUIRouter: 'vendor/angular-ui-router/release/angular-ui-router.min',
             angularUtils: 'vendor/angularUtils-pagination/dirPagination',
-            d3: 'vendor/d3/d3',
-            sockjs: 'vendor/sockjs/sockjs',
-            stomp: 'vendor/stomp-websocket/lib/stomp',
-            react: 'vendor/react/react-with-addons',
+            d3: 'vendor/d3/d3.min',
+            sockjs: 'vendor/sockjs/sockjs.min',
+            stomp: 'vendor/stomp-websocket/lib/stomp.min',
+            react: 'vendor/react/react-with-addons.min',
             //reactDom: 'vendor/react-dom/react-dom',
 
             //app scripts
@@ -21,8 +22,7 @@
             carouselCtrl: 'js/carousel/carousel',
             filterCtrl: 'js/filters/filters',
             storyCtrl: 'js/promises/story',
-            scopeCtrl: 'js/scope/scope',
-
+            scopeCtrl: 'js/scope/scope'
         },
         shim: {
             'angular': {'exports': 'angular'},
