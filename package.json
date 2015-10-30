@@ -9,7 +9,8 @@
   "scripts": {
     "predeploy": "I am about to deploy",
     "postdeploy": "I am deployed",
-    "postinstall": "bower install"
+    "install": "bower install",
+    "postinstall": "grunt"
   },
   "main": "index.html",
   "keywords": [
@@ -21,6 +22,7 @@
   "devDependencies": {
     "bower": "^1.3.1",
     "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-jshint": "^0.11.3",
     "grunt-contrib-uglify": "^0.9.2"
   },

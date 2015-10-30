@@ -1,4 +1,5 @@
-src/main/resources/app/bower_components/
+src/main/resources/app/vendor/
 node_modules/
+dist/
 target/
 npm-debug.log

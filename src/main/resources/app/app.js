@@ -2,11 +2,11 @@
     'use strict';
 
     define(['angular',
-        'functions/utils',
-        'components/version/version',
-        'events/directivesAndTemplates',
-        'forms/empl/new/newEmplForm',
-        'forms/empl/search/searchEmplForm'
+        'js/functions/utils',
+        'js/components/version/version',
+        'js/events/directivesAndTemplates',
+        'js/forms/empl/new/newEmplForm',
+        'js/forms/empl/search/searchEmplForm'
     ], function (angular) {
         var app = angular.module('myApp', ['ui.router',
             'myApp.functions',
@@ -94,19 +94,19 @@
                     .state('main', {
                         abstract: true,
                         url: '/main',
-                        templateUrl: 'tabs/tabs.html',
+                        templateUrl: 'html/tabs/tabs.html',
                         controllerAs: 'tabC',
                         controller: 'TabController'
                     })
                     .state('main.view1', {
                         url: '/view1',
-                        templateUrl: 'events/directivesAndTemplates.html',
+                        templateUrl: 'html/events/directivesAndTemplates.html',
                         controllerAs: 'datC',
                         controller: 'DirAndTemplatesCtrl'
                     })
                     .state('main.view2a', {
                         url: '/view2a',
-                        templateUrl: 'forms/empl/new/newEmplForm.html',
+                        templateUrl: 'html/forms/empl/new/newEmplForm.html',
                         controllerAs: 'nefC',
                         controller: 'NewEmplCtrl'
                         //resolve: {
@@ -115,7 +115,7 @@
                     })
                     .state('main.view2b', {
                         url: '/view2b/search',
-                        templateUrl: 'forms/empl/search/searchAndUpdateEmplForm.html',
+                        templateUrl: 'html/forms/empl/search/searchAndUpdateEmplForm.html',
                         controllerAs: 'srchC',
                         controller: 'searchEmplCtrl'
                         //resolve: {
@@ -124,7 +124,7 @@
                     })
                     .state('main.view3', {
                         url: '/view3',
-                        templateUrl: 'carousel/carousel.html',
+                        templateUrl: 'html/carousel/carousel.html',
                         controllerAs: 'crslCtrl',
                         controller: 'carouselCtrl',
                         resolve: {
@@ -133,7 +133,7 @@
                     })
                     .state('main.view4', {
                         url: '/view4',
-                        templateUrl: 'd3js/d3js.html',
+                        templateUrl: 'html/d3js/d3js.html',
                         controllerAs: 'd3C',
                         controller: 'd3Ctrl',
                         resolve: {
@@ -142,7 +142,7 @@
                     })
                     .state('main.view5', {
                         url: '/view5',
-                        templateUrl: 'sockio/sockclient.html',
+                        templateUrl: 'html/sockio/sockclient.html',
                         controllerAs: 'sockCtrl',
                         controller: 'sockIOCtrl',
                         resolve: {
@@ -151,7 +151,7 @@
                     })
                     .state('main.view6', {
                         url: '/view6',
-                        templateUrl: 'scope/scope.html',
+                        templateUrl: 'html/scope/scope.html',
                         controller: 'scopeCtrl',
                         resolve: {
                             load: lazyLoad('scopeCtrl')
@@ -159,7 +159,7 @@
                     })
                     .state('main.view7', {
                         url: '/view7',
-                        templateUrl: 'promises/story.html',
+                        templateUrl: 'html/promises/story.html',
                         controllerAs: 'storyC',
                         controller: 'storyCtrl',
                         resolve: {
@@ -168,7 +168,7 @@
                     })
                     .state('main.view8', {
                         url: '/view8',
-                        templateUrl: 'filters/filters.html',
+                        templateUrl: 'html/filters/filters.html',
                         controllerAs: 'filterC',
                         controller: 'filterCtrl',
                         resolve: {
