@@ -16,12 +16,32 @@
             .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
                 $stateProvider
                     .state('main.view2b.search', {
-                        url: '/searchForm',
-                        templateUrl: 'html/forms/empl/search/searchEmplForm.html'
+                        views: {
+                            '': { templateUrl: 'html/forms/empl/search/searchEmplForm.html' },
+                            'criteria@main.view2b.search': {
+                                templateUrl: 'html/forms/empl/search/search-criteria.html'
+                            },
+                            'results@main.view2b.search': {
+                                templateUrl: 'html/forms/empl/search/search-results.html'
+                            },
+                            'footer@main.view2b.search': {
+                                templateUrl: 'html/forms/empl/search/search-footer.html'
+                            }
+                        }
                     })
                     .state('main.view2b.rsearch', {
-                        url: '/searchRForm',
-                        templateUrl: 'html/forms/empl/search/searchEmplReactForm.html'
+                        views: {
+                            '': { templateUrl: 'html/forms/empl/search/searchEmplForm.html' },
+                            'criteria@main.view2b.rsearch': {
+                                templateUrl: 'html/forms/empl/search/search-criteria.html'
+                            },
+                            'results@main.view2b.rsearch': {
+                                templateUrl: 'html/forms/empl/search/search-results-react.html'
+                            },
+                            'footer@main.view2b.rsearch': {
+                                templateUrl: 'html/forms/empl/search/search-footer.html'
+                            }
+                        }
                     })
                     .state('main.view2b.update', {
                         url: '/updateForm',

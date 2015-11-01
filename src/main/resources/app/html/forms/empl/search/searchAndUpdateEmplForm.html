@@ -7,12 +7,10 @@
 <body>
 
 <div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
-        <div id="form-container">
+    <div class="col-sm-12">
+        <div id="form-container" style="margin-top: 0 !important; margin-bottom: 0 !important;">
 
-            <div class="page-header text-center">
-                <h2>Search Employee Form</h2>
-
+            <div class="page-header text-center" style="margin-top: 0 !important; margin-bottom: 0 !important;">
                 <div id="status-buttons">
                     <a ui-sref=".rsearch">React Search</a>
                     <a ui-sref=".search">Search</a>
@@ -24,15 +22,11 @@
             <div id="messages">{{ view2b.message }}</div>
 
             <br/>
-            <!--<form name="form" id="signup-form" novalidate class="form-css" ng-submit="nefC.save(emp)">-->
-                <div ui-view></div>
-            <!--</form>-->
-
+            <div ui-view></div>
             <br/> <br/>
         </div>
     </div>
 </div>
-
 <br/>
 </body>
 </html>

@@ -94,9 +94,9 @@
                     .state('main', {
                         abstract: true,
                         url: '/main',
-                        templateUrl: 'html/tabs/tabs.html',
                         controllerAs: 'tabC',
-                        controller: 'TabController'
+                        controller: 'TabController',
+                        templateUrl: 'html/tabs/tabs.html',
                     })
                     .state('main.view1', {
                         url: '/view1',
@@ -114,10 +114,10 @@
                         //}
                     })
                     .state('main.view2b', {
-                        url: '/view2b/search',
+                        url: '/view2b',
                         templateUrl: 'html/forms/empl/search/searchAndUpdateEmplForm.html',
                         controllerAs: 'srchC',
-                        controller: 'searchEmplCtrl'
+                        controller: 'searchEmplCtrl',
                         //resolve: {
                         //    load: lazyLoad('searchEmplCtrl')
                         //}
