@@ -3,7 +3,7 @@
     define([
         'angular'
     ], function (angular) {
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getControllerProvider()
             .register('scopeCtrl', ['$scope', function ($scope) {
                 $scope.callHome = function (msg) {
@@ -23,7 +23,7 @@
 //	  };
 //	})
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getCompileProvider().directive("phone", function () {
                 return {
                     scope: {
@@ -44,7 +44,7 @@
 //	  };
 //	})
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getCompileProvider().directive("drink", function () {
                 return {
                     scope: {
@@ -54,7 +54,7 @@
                 };
             })
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getCompileProvider().directive("drinkCtrlFlavor", function () {
                 return {
                     scope: {
@@ -64,7 +64,7 @@
                 };
             })
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getCompileProvider().directive("clock", function () {
                 return {
                     scope: {
@@ -74,7 +74,7 @@
                 };
             })
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getCompileProvider().directive("panel", function () {
                 return {
                     restrict: 'E',
@@ -89,7 +89,7 @@
                 }
             })
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getCompileProvider().directive("tasksWithTransclude", function () {
                 return {
                     restrict: 'E',
@@ -116,7 +116,7 @@
             })
 
         //custom form controls for contenteditable
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getCompileProvider().directive('contenteditable', function () {
                 return {
                     require: 'ngModel',

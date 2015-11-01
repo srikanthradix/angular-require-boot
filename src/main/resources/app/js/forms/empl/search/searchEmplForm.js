@@ -5,45 +5,47 @@
     'use strict';
 
     define([
-        'angular', 'angularResource', 'angularUtils', 'react'//, 'reactDom'
+        'angular'
     ], function (angular) {
 
         var React = require('react');
 
         //var ReactDOM = require('reactDom');
-        angular.module('myApp.view2b.searchEmplForm', ['ui.router', 'ngResource', 'angularUtils.directives.dirPagination'])
+        angular.module('myApp.searchEmplForm', ['myApp.constants', 'ui.router', 'ngResource', 'angularUtils.directives.dirPagination'])
 
-            .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+            .config(['NAV', '$stateProvider', '$urlRouterProvider', function (NAV, $stateProvider, $urlRouterProvider) {
+
+                var search_views = {};
+                var rsearch_views = {};
+
+                search_views[''] = {
+                    templateUrl: 'html/forms/empl/search/searchEmplForm.html'
+                };
+                search_views[NAV.LIST_EMP.SEARCH.CRITERIA] = {
+                    templateUrl: 'html/forms/empl/search/search-criteria.html'
+                };
+                search_views[NAV.LIST_EMP.SEARCH.RESULTS] = {
+                    templateUrl: 'html/forms/empl/search/search-results.html'
+                };
+                search_views[NAV.LIST_EMP.SEARCH.FOOTER] = {
+                    templateUrl: 'html/forms/empl/search/search-footer.html'
+                };
+
+                rsearch_views[''] = search_views[''];
+                rsearch_views[NAV.LIST_EMP.RSEARCH.CRITERIA] = search_views[NAV.LIST_EMP.SEARCH.CRITERIA];
+                rsearch_views[NAV.LIST_EMP.RSEARCH.RESULTS] = {
+                    templateUrl: 'html/forms/empl/search/search-results-react.html'
+                };
+                rsearch_views[NAV.LIST_EMP.RSEARCH.FOOTER] = search_views[NAV.LIST_EMP.SEARCH.FOOTER];
+
                 $stateProvider
-                    .state('main.view2b.search', {
-                        views: {
-                            '': { templateUrl: 'html/forms/empl/search/searchEmplForm.html' },
-                            'criteria@main.view2b.search': {
-                                templateUrl: 'html/forms/empl/search/search-criteria.html'
-                            },
-                            'results@main.view2b.search': {
-                                templateUrl: 'html/forms/empl/search/search-results.html'
-                            },
-                            'footer@main.view2b.search': {
-                                templateUrl: 'html/forms/empl/search/search-footer.html'
-                            }
-                        }
+                    .state(NAV.LIST_EMP.SEARCH.PAGE, {
+                        views: search_views
                     })
-                    .state('main.view2b.rsearch', {
-                        views: {
-                            '': { templateUrl: 'html/forms/empl/search/searchEmplForm.html' },
-                            'criteria@main.view2b.rsearch': {
-                                templateUrl: 'html/forms/empl/search/search-criteria.html'
-                            },
-                            'results@main.view2b.rsearch': {
-                                templateUrl: 'html/forms/empl/search/search-results-react.html'
-                            },
-                            'footer@main.view2b.rsearch': {
-                                templateUrl: 'html/forms/empl/search/search-footer.html'
-                            }
-                        }
+                    .state(NAV.LIST_EMP.RSEARCH.PAGE, {
+                        views: rsearch_views
                     })
-                    .state('main.view2b.update', {
+                    .state(NAV.LIST_EMP.UPDATE, {
                         url: '/updateForm',
                         templateUrl: 'html/forms/empl/update/updateEmplForm.html'
                     });
@@ -56,13 +58,13 @@
                 self.create = function () {
                     return React.createClass({
                         displayName: 'MyEmployeesList',
-                        sortBy : function (arr, prop) {
-                            arr.sort(function(a, b) {
+                        sortBy: function (arr, prop) {
+                            arr.sort(function (a, b) {
                                 return parseFloat(a.salary) - parseFloat(b.salary);
                             })
                         },
-                        sortByInverse : function (arr, prop) {
-                            arr.sort(function(a, b) {
+                        sortByInverse: function (arr, prop) {
+                            arr.sort(function (a, b) {
                                 return parseFloat(b.salary) - parseFloat(a.salary);
                             })
                         },
@@ -74,7 +76,7 @@
                         //        return ( (A < B) ? -1 : ((A > B) ? 1 : 0) ) * [-1,1][+!!reverse];
                         //    }
                         //},
-                        getInitialState: function() {
+                        getInitialState: function () {
                             return {
                                 inverse: true,
                                 selected: false,
@@ -82,26 +84,26 @@
                             };
                         },
 
-                        sort: function(employees, prop) {
+                        sort: function (employees, prop) {
                             var inverse = !this.state.inverse;
                             this.setState({inverse: inverse});
-                            if(inverse === true) {
+                            if (inverse === true) {
                                 this.sortBy(employees, prop);
                             } else {
                                 this.sortByInverse(employees, prop);
                             }
                         },
-                        selectAllHandler : function (employees) {
+                        selectAllHandler: function (employees) {
                             var selectAll = !this.state.selectAll;
-                            this.setState({selectAll : selectAll});
+                            this.setState({selectAll: selectAll});
                             employees.map(function (emp, idx) {
                                 emp.selected = selectAll;
                             });
                             //ctrl.clickHandler.call(ctrl, emp)
                         },
-                        selectHandler : function (ctrl, emp) {
+                        selectHandler: function (ctrl, emp) {
                             emp.selected = !emp.selected;
-                            this.setState({selected : emp.selected});
+                            this.setState({selected: emp.selected});
                             //ctrl.clickHandler.call(ctrl, emp)
                         },
                         //propTypes: {
@@ -163,7 +165,7 @@
                                     React.DOM.td({}, cols[0]),
                                     React.DOM.td({}, cols[1]),
                                     React.DOM.td({
-                                        onClick : self.sort.bind(self, ctrl.employees, cols[2])
+                                        onClick: self.sort.bind(self, ctrl.employees, cols[2])
                                     }, cols[2]),
                                     React.DOM.td({}, cols[3])
                                 ));
@@ -183,7 +185,7 @@
                 return self;
             })
 
-            //angular.module('myApp')
+            //angular.module('myApp.bootstrap')
             //    .getControllerProvider()
             //    .register
             .controller('searchEmplCtrl', ['$state', 'srchFormService',
@@ -224,7 +226,7 @@
                     //self.reset();
                 }])
 
-            //angular.module('myApp')
+            //angular.module('myApp.bootstrap')
             //    .getCompileProvider()
             .directive('displayWithReact', ['reactEmpTableRendererFactory', 'srchFormService',
                 function (reactEmpTableRendererFactory, srchFormService) {
@@ -313,7 +315,7 @@
                 };
             })
 
-            //angular.module('myApp')
+            //angular.module('myApp.bootstrap')
             //    .getProvider()
             .service('deptService', ['$resource', function ($resource) {
                 return $resource('/dept/:dept', {dept: '@_dept'}, {
@@ -323,7 +325,7 @@
                 });
             }])
 
-            //angular.module('myApp')
+            //angular.module('myApp.bootstrap')
             //    .getProvider()
             .service('srchFormService', ['$state', 'deptService', function ($state, deptService) {
                 var self = this;
@@ -340,7 +342,7 @@
                 }
 
                 self.setSelectedEmployee = function () {
-                    angular.forEach(self.emps, function(emp) {
+                    angular.forEach(self.emps, function (emp) {
                         if (emp.selected === true) {
                             self.selectedEmp = emp;
                         }
@@ -391,8 +393,8 @@
 
                 self.removeEmployee = function () {
                     var activeEmps = [];
-                    angular.forEach(self.emps, function(emp) {
-                        if(emp.selected === false) {
+                    angular.forEach(self.emps, function (emp) {
+                        if (emp.selected === false) {
                             activeEmps.push(emp);
                         }
                     })

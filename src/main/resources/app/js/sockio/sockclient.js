@@ -6,14 +6,14 @@
         'stomp'
     ], function (angular) {
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getProvider()
             .constant("MY_EVENTS", {
                 "SOCK_IO_MSG": "sockio:msg",
                 "SOCK_IO_CONNECTED": "sockio:connected"
             });
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getControllerProvider()
             .register('sockIOCtrl', ['$scope', 'sockjsService', 'MY_EVENTS', function ($scope, sockjs, MY_EVENTS) {
                 var self = this;
@@ -52,7 +52,7 @@
                 //    connectListener();
             }]);
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getProvider()
             .service('sockjsService', ['$rootScope', 'MY_EVENTS', function ($rootScope, MY_EVENTS) {
 

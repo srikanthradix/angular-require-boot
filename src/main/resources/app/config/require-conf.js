@@ -4,16 +4,16 @@
     require.config({
         baseUrl: '../',
         paths: {
-            angular: 'vendor/angular/angular.min',
-            angularResource: 'vendor/angular-resource/angular-resource.min',
-            angularAnimate: 'vendor/angular-animate/angular-animate.min',
-            angularUIBootstrap: 'vendor/angular-bootstrap/ui-bootstrap-tpls.min',
-            angularUIRouter: 'vendor/angular-ui-router/release/angular-ui-router.min',
+            angular: 'vendor/angular/angular',
+            angularResource: 'vendor/angular-resource/angular-resource',
+            angularAnimate: 'vendor/angular-animate/angular-animate',
+            angularUIBootstrap: 'vendor/angular-bootstrap/ui-bootstrap-tpls',
+            angularUIRouter: 'vendor/angular-ui-router/release/angular-ui-router',
             angularUtils: 'vendor/angularUtils-pagination/dirPagination',
-            d3: 'vendor/d3/d3.min',
-            sockjs: 'vendor/sockjs/sockjs.min',
-            stomp: 'vendor/stomp-websocket/lib/stomp.min',
-            react: 'vendor/react/react-with-addons.min',
+            d3: 'vendor/d3/d3',
+            sockjs: 'vendor/sockjs/sockjs',
+            stomp: 'vendor/stomp-websocket/lib/stomp',
+            react: 'vendor/react/react-with-addons',
             //reactDom: 'vendor/react-dom/react-dom',
 
             //app scripts
@@ -38,6 +38,9 @@
             'angularUtils': {
                 deps: ['angular']
             },
+            'react': {
+              exports: 'React'
+            },
             'reactDom': {
                 deps: ['react'],
                 'exports': 'ReactDOM'
@@ -51,8 +54,10 @@
             'angular',
             'angularUIRouter',
             'angularResource',
-            'app',
-        ], function (angular, app) {
+            'angularUtils',
+            'react',
+            'app'
+        ], function (angular) {
             var $html = angular.element(document.getElementsByTagName('html')[0]);
             angular.element().ready(function () {
                 //bootstrap the app manually

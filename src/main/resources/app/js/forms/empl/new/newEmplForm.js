@@ -3,17 +3,16 @@
 
     define([
         'angular',
-        'angularResource'
     ], function (angular) {
-        angular.module('myApp.view2a.newEmplForm', ['ngResource', 'ui.router'])
+        angular.module('myApp.newEmplForm', ['myApp.constants', 'ngResource', 'ui.router'])
 
-            .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+            .config(['NAV', '$stateProvider', '$urlRouterProvider', function (NAV, $stateProvider, $urlRouterProvider) {
                 $stateProvider
-                    .state('main.view2a.id', {
+                    .state(NAV.NEW_EMP.ID, {
                         url: '/idForm',
                         templateUrl: 'html/forms/empl/new/idForm.html'
                     })
-                    .state('main.view2a.profile', {
+                    .state(NAV.NEW_EMP.PROFILE, {
                         url: '/profileForm',
                         templateUrl: 'html/forms/empl/new/profileForm.html'
                     });
@@ -21,10 +20,10 @@
                 $urlRouterProvider.otherwise('/main/view2a/idForm');
             }])
 
-            .controller('NewEmplCtrl', ['$state', 'empService', function ($state, empService) {
+            .controller('NewEmplCtrl', ['NAV', '$state', 'empService', function (NAV, $state, empService) {
                 var self = this;
                 self.master = self.master || {};
-                self.view2a = self.view2a || {};
+                self.message = "";
 
                 self.next = function (emp) {
                     angular.extend(self.master, emp);
@@ -34,14 +33,14 @@
                     angular.extend(emp, self.master);
                     empService.save(emp).$promise
                         .then(function (data) {
-                            self.view2a.message = 'Employee signed up: ' + data.id
+                            self.message = 'Employee signed up: ' + data.id
                         }, function (error) {
                             console.log(error);
-                            self.view2a.message = 'There is an error signing up employee. Please contact customer support.';
+                            self.message = 'There is an error signing up employee. Please contact customer support.';
                         })
                         .finally(function () {
                             self.reset();
-                            $state.go('main.view2a');
+                            $state.go(NAV.NEW_EMP.ID);
                         });
                 };
 

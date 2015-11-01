@@ -182,6 +182,10 @@ tr:nth-child(even) {
     height: 350px;
 }
 
+.row {
+    margin: 0 !important;
+}
+
 .bg {
     background-size: cover;
     background: no-repeat center center;

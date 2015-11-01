@@ -3,7 +3,7 @@
     define([
         'angular'
     ], function (angular) {
-        angular.module('myApp.view1.directivesAndTemplates', [])
+        angular.module('myApp.directivesAndTemplates', [])
 
             .directive('mouseEventsDirective', function () {
                 return {

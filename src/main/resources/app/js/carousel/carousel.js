@@ -5,9 +5,9 @@ define([
     'angularAnimate',
     'angularUIBootstrap'
 ], function(angular) {
-	angular.module('myApp.view3.carousel', ['ui.router', 'ui.bootstrap', 'ngAnimate'])
+	angular.module('myApp.carousel', ['ui.router', 'ui.bootstrap', 'ngAnimate'])
 
-    angular.module('myApp')
+    angular.module('myApp.bootstrap')
         .getControllerProvider()
         .register('carouselCtrl', [function() {
     	var self = this;
@@ -26,12 +26,12 @@ define([
             });
         };
 
-        for(var i=0; i<4; i++) {
+        for(var i=0; i<3; i++) {
             self.addSlide();
         }
     }])
 
-    angular.module('myApp')
+    angular.module('myApp.bootstrap')
         .getCompileProvider()
         .directive('myCarousel', ['$compile',function($compile){
         function link(scope, element, attrs, crslC) {
@@ -58,7 +58,7 @@ define([
         };
     }]);
 
-    angular.module('myApp')
+    angular.module('myApp.bootstrap')
         .getControllerProvider()
         .register('DateCtrl', [function() {
     	var self = this;

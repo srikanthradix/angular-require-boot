@@ -4,7 +4,7 @@
         'angular'
     ], function (angular) {
         //all of them should return to display
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getProvider()
             .service('storyService', ['$q', '$http', '$timeout', 'http_defaults', function ($q, $http, $timeout, http_defaults) {
                 var self = this;
@@ -25,7 +25,7 @@
             }])
 
         //some of them which returned first are displayed
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getProvider()
             .service('storyServiceUsingMap', ['$q', '$http', '$timeout', /*'http_defaults',*/ function ($q, $http, $timeout /*,http_defaults*/) {
                 var self = this;
@@ -43,7 +43,7 @@
                 }
             }])
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getControllerProvider()
             .register('storyCtrl', ['storyService', 'storyServiceUsingMap', function (storyService, storyServiceUsingMap) {
                 var self = this;
@@ -64,7 +64,7 @@
                     })
             }])
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getProvider().value('http_defaults', {
                 timeout: 2000
             })

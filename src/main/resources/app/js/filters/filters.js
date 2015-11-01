@@ -3,9 +3,9 @@
     define([
         'angular'
     ], function (angular) {
-        angular.module('myApp.view8.filters', [ ])
+        angular.module('myApp.filters', [ ])
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getControllerProvider()
             .register('filterCtrl', ['friendsFactory', 'weatherService', function (friendsFactory, weatherService) {
                 var self = this;

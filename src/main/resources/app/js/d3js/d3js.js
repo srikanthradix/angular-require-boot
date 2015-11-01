@@ -8,7 +8,7 @@
         'd3'
     ], function (angular) {
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getCompileProvider()
             .directive('barChart', ['$window', function ($window) {
                 var myDirective = {
@@ -45,7 +45,7 @@
                 return myDirective;
             }]);
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getControllerProvider()
             .register('d3Ctrl', ['$scope', /*'mapFactory', */'scales', 'tracker',
                 function ($scope /*mapFactory*/, scaleService, tracker) {
@@ -78,7 +78,7 @@
                     tracker.progress();
                 }]);
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getProvider()
             .service('tracker', ['$timeout', function ($timeout) {
 
@@ -99,7 +99,7 @@
                 }
             }])
 
-        angular.module('myApp')
+        angular.module('myApp.bootstrap')
             .getProvider()
             .service('scales', ['$window', function ($window) {
                 var d3 = $window.d3;
@@ -165,7 +165,7 @@
                 }
             }])
 
-        angular.module('myApp.view4.d3js', ['ui.router'])
+        angular.module('myApp.d3js', ['ui.router'])
 
             .factory('d3Factory', ['$q', '$window', '$rootScope', '$document', function ($q, $window, $rootScope, $document) {
 
