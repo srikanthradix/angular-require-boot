@@ -50,7 +50,7 @@
                         templateUrl: 'html/forms/empl/update/updateEmplForm.html'
                     });
 
-                $urlRouterProvider.otherwise('/main/view2b');
+                $urlRouterProvider.otherwise('/');
             }])
 
             .factory('reactEmpTableRendererFactory', function () {
